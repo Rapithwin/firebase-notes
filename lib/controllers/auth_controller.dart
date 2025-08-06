@@ -41,9 +41,17 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Error", e.message ?? "Something went wrong");
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  void signOut() {
+    try {
+      auth.signOut();
     } catch (e) {
       log(e.toString());
     }
