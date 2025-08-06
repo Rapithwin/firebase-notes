@@ -23,4 +23,17 @@ class AuthController extends GetxController {
       Get.offAll(() => const LoginPage());
     }
   }
+
+  void register(String email, String password) async {
+    try {
+      await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", e.message ?? "Something went wrong");
+    } catch (e) {
+      print(e);
+    }
+  }
 }
