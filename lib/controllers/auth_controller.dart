@@ -2,10 +2,15 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/constants/auth_constants.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  static AuthController instance = Get.find();
+  final FirebaseAuth auth;
+  final void Function(Widget) navigate;
+
+  AuthController({required this.auth, required this.navigate});
+
   late Rx<User?> firebaseUser;
 
   @override
@@ -20,32 +25,39 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user != null) {
-      Get.offAll(() => const HomePage());
+      navigate(const HomePage());
     } else {
-      Get.offAll(() => const LoginPage());
+      navigate(LoginPage());
     }
   }
 
-  void register(String email, String password) async {
+  Future<(bool, String?)> register(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return (true, null);
     } on FirebaseAuthException catch (e) {
-      Get.snackbar("Error", e.message ?? "Something went wrong");
+      return (false, e.message);
     } catch (e) {
       log(e.toString());
+      return (false, e.toString());
     }
   }
 
-  void login(String email, String password) async {
+  Future<(bool, String?)> login(String email, String password) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return (true, null);
     } on FirebaseAuthException catch (e) {
-      Get.snackbar("Error", e.message ?? "Something went wrong");
+      return (false, e.message);
     } catch (e) {
       log(e.toString());
+      return (false, e.toString());
     }
   }
 
