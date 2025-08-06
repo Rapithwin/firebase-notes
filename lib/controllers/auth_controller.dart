@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/constants/auth_constants.dart';
 import 'package:get/get.dart';
@@ -33,7 +35,17 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Error", e.message ?? "Something went wrong");
     } catch (e) {
-      print(e);
+      log(e.toString());
+    }
+  }
+
+  void login(String email, String password) async {
+    try {
+      auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", e.message ?? "Something went wrong");
+    } catch (e) {
+      log(e.toString());
     }
   }
 }
