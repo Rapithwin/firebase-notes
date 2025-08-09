@@ -26,7 +26,7 @@ flutter:
   fonts:
         - family: Allerta
           fonts:
-            - asset: Allerta-Regular.ttf
+            - asset: assets/fonts/Allerta-Regular.ttf
         - family: DidactGothic
           fonts:
-            - asset: DidactGothic-Regular.ttf
+            - asset: assets/fonts/DidactGothic-Regular.ttf
