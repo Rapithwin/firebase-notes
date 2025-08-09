@@ -60,5 +60,18 @@ void main() {
       expect(result.$2, isA<FirebaseAuthException>());
       expect(result.$2?.code, "oops");
     });
+
+    test("Register returns the correct tuple on success", () async {
+      when(
+        () => auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).thenAnswer((_) async => MockUserCredential());
+
+      final result = await controller.register(email, password);
+      expect(result.$1, isTrue);
+      expect(result.$2, isNull);
+    });
   });
 }
