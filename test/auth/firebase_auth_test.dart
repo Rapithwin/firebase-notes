@@ -13,10 +13,16 @@ class MockNavigator extends Mock {
 }
 
 void main() {
+  late MockFirebaseAuth auth;
+  late MockNavigator navigator;
+  late AuthController controller;
   group("firebase auth controller", () {
-    final auth = MockFirebaseAuth();
-    final navigator = MockNavigator();
-    final controller = AuthController(auth: auth, navigate: navigator.call);
+    setUp(() {
+      auth = MockFirebaseAuth();
+      navigator = MockNavigator();
+      controller = AuthController(auth: auth, navigate: navigator.call);
+    });
+
     final email = "user@example.com";
     final password = "12345678A@M@a!";
 
@@ -39,6 +45,20 @@ void main() {
           password: password,
         ),
       ).called(1);
+    });
+
+    test("Register returns failure tuple on exception", () async {
+      when(
+        () => auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).thenThrow(FirebaseAuthException(code: "oops"));
+
+      final result = await controller.register(email, password);
+      expect(result.$1, isFalse);
+      expect(result.$2, isA<FirebaseAuthException>());
+      expect(result.$2?.code, "oops");
     });
   });
 }
