@@ -1,3 +1,4 @@
+import 'package:firebase_notes/app.dart';
 import 'package:firebase_notes/constants/auth_constants.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -14,19 +15,4 @@ void main() async {
     );
   });
   runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
 }
