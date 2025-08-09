@@ -22,3 +22,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+        - family: Allerta
+          fonts:
+            - asset: Allerta-Regular.ttf
+        - family: DidactGothic
+          fonts:
+            - asset: DidactGothic-Regular.ttf
