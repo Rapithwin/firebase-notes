@@ -10,7 +10,7 @@ class AppTheme {
           fontFamily: "Allerta",
           fontWeight: FontWeight.w500,
           fontSize: 28,
-          letterSpacing: 1.5,
+          letterSpacing: 1.3,
         ),
       ),
       colorScheme: ColorScheme.fromSeed(

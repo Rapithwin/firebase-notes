@@ -1,3 +1,4 @@
+import 'package:firebase_notes/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatelessWidget {
@@ -19,6 +20,38 @@ class SignupPage extends StatelessWidget {
             size: 30,
           ),
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 36.0),
+        child: SingleChildScrollView(
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                CustomFormField(
+                  labelName: "Email",
+                  textDirection: TextDirection.ltr,
+                  inputAction: TextInputAction.next,
+                  controller: TextEditingController(),
+                  theme: theme,
+                ),
+                CustomFormField(
+                  labelName: "Password",
+                  textDirection: TextDirection.ltr,
+                  inputAction: TextInputAction.next,
+                  controller: TextEditingController(),
+                  theme: theme,
+                ),
+                CustomFormField(
+                  labelName: "Confirm Password",
+                  textDirection: TextDirection.ltr,
+                  inputAction: TextInputAction.next,
+                  controller: TextEditingController(),
+                  theme: theme,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
