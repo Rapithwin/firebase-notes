@@ -33,7 +33,10 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<(bool, String?)> register(String email, String password) async {
+  Future<(bool, FirebaseAuthException?)> register(
+    String email,
+    String password,
+  ) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
@@ -41,14 +44,17 @@ class AuthController extends GetxController {
       );
       return (true, null);
     } on FirebaseAuthException catch (e) {
-      return (false, e.message);
+      return (false, e);
     } catch (e) {
       log(e.toString());
-      return (false, e.toString());
+      return (false, FirebaseAuthException(code: "unknown"));
     }
   }
 
-  Future<(bool, String?)> login(String email, String password) async {
+  Future<(bool, FirebaseAuthException?)> login(
+    String email,
+    String password,
+  ) async {
     try {
       await auth.signInWithEmailAndPassword(
         email: email,
@@ -56,10 +62,10 @@ class AuthController extends GetxController {
       );
       return (true, null);
     } on FirebaseAuthException catch (e) {
-      return (false, e.message);
+      return (false, e);
     } catch (e) {
       log(e.toString());
-      return (false, e.toString());
+      return (false, FirebaseAuthException(code: "unknown"));
     }
   }
 
