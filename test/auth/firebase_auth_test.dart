@@ -73,5 +73,52 @@ void main() {
       expect(result.$1, isTrue);
       expect(result.$2, isNull);
     });
+    test("login method calls signInWithEmailAndPassword", () async {
+      when(
+        () => auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).thenAnswer(
+        (_) async => MockUserCredential(),
+      );
+
+      try {
+        await controller.login(email, password);
+      } catch (_) {}
+      verify(
+        () => auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).called(1);
+    });
+
+    test("login returns failure tuple on exception", () async {
+      when(
+        () => auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).thenThrow(FirebaseAuthException(code: "oops"));
+
+      final result = await controller.login(email, password);
+      expect(result.$1, isFalse);
+      expect(result.$2, isA<FirebaseAuthException>());
+      expect(result.$2?.code, "oops");
+    });
+
+    test("login returns the correct tuple on success", () async {
+      when(
+        () => auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      ).thenAnswer((_) async => MockUserCredential());
+
+      final result = await controller.login(email, password);
+      expect(result.$1, isTrue);
+      expect(result.$2, isNull);
+    });
   });
 }
