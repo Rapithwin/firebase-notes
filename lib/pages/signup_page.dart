@@ -5,6 +5,21 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
+      appBar: AppBar(
+        titleSpacing: 30,
+        title: Text("SIGN UP"),
+        toolbarHeight: 45,
+        actionsPadding: EdgeInsets.only(right: 30),
+        actions: [
+          Icon(
+            Icons.sunny,
+            size: 30,
+          ),
+        ],
+      ),
+    );
   }
 }
