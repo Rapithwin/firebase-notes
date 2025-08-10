@@ -1,5 +1,8 @@
+import 'package:firebase_notes/pages/login_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -81,7 +84,7 @@ class SignupPage extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.off(LoginPage()),
                       child: Text(
                         "Log In.",
                         style: TextStyle(
