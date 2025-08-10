@@ -1,4 +1,4 @@
-import 'package:firebase_notes/widgets/custom_form_field.dart';
+import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatelessWidget {
@@ -47,6 +47,31 @@ class SignupPage extends StatelessWidget {
                   inputAction: TextInputAction.next,
                   controller: TextEditingController(),
                   theme: theme,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 35,
+                    child: CustomElevatedButton(
+                      theme: theme,
+                      title: "SIGN UP",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 8,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 35,
+                    child: CustomTextButton(
+                      theme: theme,
+                      title: "Continue with Google",
+                    ),
+                  ),
                 ),
               ],
             ),
