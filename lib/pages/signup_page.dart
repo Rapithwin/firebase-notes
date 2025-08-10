@@ -2,7 +2,6 @@ import 'package:firebase_notes/pages/login_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -18,9 +17,10 @@ class SignupPage extends StatelessWidget {
         toolbarHeight: 45,
         actionsPadding: EdgeInsets.only(right: 30),
         actions: [
-          Icon(
-            Icons.sunny,
-            size: 30,
+          Image.asset(
+            "assets/images/solar_sun-bold.png",
+            height: 35,
+            width: 35,
           ),
         ],
       ),
@@ -72,7 +72,26 @@ class SignupPage extends StatelessWidget {
                     height: 35,
                     child: CustomTextButton(
                       theme: theme,
-                      title: "Continue with Google",
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 7,
+                        children: [
+                          Image.asset(
+                            "assets/images/devicon_google.png",
+                            width: 20,
+                            height: 20,
+                          ),
+                          Text(
+                            "Continue with Google",
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontFamily: "Allerta",
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

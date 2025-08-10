@@ -17,9 +17,10 @@ class LoginPage extends StatelessWidget {
         toolbarHeight: 45,
         actionsPadding: EdgeInsets.only(right: 30),
         actions: [
-          Icon(
-            Icons.sunny,
-            size: 30,
+          Image.asset(
+            "assets/images/solar_sun-bold.png",
+            width: 35,
+            height: 35,
           ),
         ],
       ),
@@ -65,7 +66,26 @@ class LoginPage extends StatelessWidget {
                     height: 35,
                     child: CustomTextButton(
                       theme: theme,
-                      title: "Continue with Google",
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 7,
+                        children: [
+                          Image.asset(
+                            "assets/images/devicon_google.png",
+                            width: 20,
+                            height: 20,
+                          ),
+                          Text(
+                            "Continue with Google",
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontFamily: "Allerta",
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

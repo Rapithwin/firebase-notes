@@ -8,7 +8,7 @@ class CustomTextButton extends StatelessWidget {
   });
 
   final ThemeData theme;
-  final String title;
+  final Widget title;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +27,7 @@ class CustomTextButton extends StatelessWidget {
         ),
       ),
 
-      child: Text(
-        "Continue with Google",
-        style: TextStyle(
-          color: theme.colorScheme.onSurface,
-          fontFamily: "Allerta",
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: title,
     );
   }
 }
