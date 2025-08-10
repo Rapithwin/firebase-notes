@@ -62,7 +62,7 @@ class SignupPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
-                    vertical: 8,
+                    vertical: 7,
                   ),
                   child: SizedBox(
                     width: double.infinity,
@@ -72,6 +72,26 @@ class SignupPage extends StatelessWidget {
                       title: "Continue with Google",
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        "Log In.",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.tertiary,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
