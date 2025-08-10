@@ -21,6 +21,7 @@ class AppTheme {
         secondary: Color(0xff958DA5),
         tertiary: Color(0xffFB80FF),
         outline: Color(0xff868686),
+        onPrimary: Color(0xffEBEBEB),
       ),
     );
   }
