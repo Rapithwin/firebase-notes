@@ -43,6 +43,7 @@ class AuthController extends GetxController {
       );
       return (true, null);
     } on FirebaseAuthException catch (e) {
+      log(e.message!);
       return (false, e);
     } catch (e) {
       log(e.toString());
@@ -61,6 +62,7 @@ class AuthController extends GetxController {
       );
       return (true, null);
     } on FirebaseAuthException catch (e) {
+      log(e.toString());
       return (false, e);
     } catch (e) {
       log(e.toString());
@@ -68,9 +70,9 @@ class AuthController extends GetxController {
     }
   }
 
-  void signOut() {
+  void signOut() async {
     try {
-      auth.signOut();
+      await auth.signOut();
     } catch (e) {
       log(e.toString());
     }
