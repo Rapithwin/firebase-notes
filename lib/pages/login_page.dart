@@ -3,7 +3,6 @@ import 'package:firebase_notes/pages/signup_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,13 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final ThemeController _themeController = Get.put(ThemeController());
-
-  @override
-  void dispose() {
-    _themeController.dispose();
-    super.dispose();
-  }
+  final _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {

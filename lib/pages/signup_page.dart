@@ -12,13 +12,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final ThemeController _themeController = Get.put(ThemeController());
-
-  @override
-  void dispose() {
-    _themeController.dispose();
-    super.dispose();
-  }
+  final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
