@@ -1,10 +1,25 @@
+import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/pages/signup_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final ThemeController _themeController = Get.put(ThemeController());
+
+  @override
+  void dispose() {
+    _themeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +32,21 @@ class LoginPage extends StatelessWidget {
         toolbarHeight: 45,
         actionsPadding: EdgeInsets.only(right: 30),
         actions: [
-          Image.asset(
-            "assets/images/solar_sun-bold.png",
-            width: 35,
-            height: 35,
+          GestureDetector(
+            onTap: () {
+              _themeController.toggleTheme();
+            },
+            child: Get.isDarkMode
+                ? Image.asset(
+                    "assets/images/solar_sun-bold.png",
+                    height: 35,
+                    width: 35,
+                  )
+                : Image.asset(
+                    "assets/images/line-md_moon-filled.png",
+                    height: 35,
+                    width: 35,
+                  ),
           ),
         ],
       ),
