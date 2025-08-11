@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/pages/signup_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
@@ -13,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _themeController = Get.find<ThemeController>();
+  final _authController = Get.find<AuthController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController, _passwordController;
 
@@ -70,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                   labelName: "Email",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: TextEditingController(),
+                  controller: _emailController,
                   theme: theme,
                   validator: emptyValidator,
                 ),
@@ -78,9 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                   labelName: "Password",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: TextEditingController(),
+                  controller: _passwordController,
                   theme: theme,
                   validator: emptyValidator,
+                  maxLines: 1,
+                  obscureText: true,
                 ),
 
                 Padding(
@@ -91,9 +96,25 @@ class _LoginPageState extends State<LoginPage> {
                     child: CustomElevatedButton(
                       theme: theme,
                       title: "LOG IN",
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
                           return;
+                        }
+
+                        (bool, FirebaseAuthException?) result =
+                            await _authController.login(
+                              _emailController.text.trim(),
+                              _passwordController.text,
+                            );
+                        if (!result.$1) {
+                          Get.snackbar(
+                            "Error",
+                            result.$2!.message!,
+                            backgroundColor: theme.colorScheme.error.withAlpha(
+                              220,
+                            ),
+                            colorText: theme.colorScheme.onError,
+                          );
                         }
                       },
                     ),

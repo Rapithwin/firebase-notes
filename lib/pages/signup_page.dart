@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/pages/login_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
@@ -13,6 +15,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final ThemeController _themeController = Get.find<ThemeController>();
+  final AuthController _authController = Get.find<AuthController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController,
       _passwordController,
@@ -84,7 +87,9 @@ class _SignupPageState extends State<SignupPage> {
                   inputAction: TextInputAction.next,
                   controller: _passwordController,
                   theme: theme,
+                  maxLines: 1,
                   validator: emptyValidator,
+                  obscureText: true,
                 ),
                 CustomFormField(
                   labelName: "Confirm Password",
@@ -92,6 +97,8 @@ class _SignupPageState extends State<SignupPage> {
                   inputAction: TextInputAction.next,
                   controller: _confirmPasswordController,
                   theme: theme,
+                  maxLines: 1,
+                  obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return emptyValidator(value);
@@ -109,9 +116,26 @@ class _SignupPageState extends State<SignupPage> {
                     child: CustomElevatedButton(
                       theme: theme,
                       title: "SIGN UP",
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
                           return;
+                        }
+
+                        (bool, FirebaseAuthException?) result =
+                            await _authController.register(
+                              _emailController.text.trim(),
+                              _passwordController.text,
+                            );
+                        if (!result.$1) {
+                          Get.snackbar(
+                            "Error",
+                            result.$2!.message!,
+                            backgroundColor: theme.colorScheme.error.withAlpha(
+                              220,
+                            ),
+
+                            colorText: theme.colorScheme.onError,
+                          );
                         }
                       },
                     ),
