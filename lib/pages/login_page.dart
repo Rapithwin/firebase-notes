@@ -13,6 +13,22 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _themeController = Get.find<ThemeController>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _emailController, _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.only(top: 36.0),
         child: SingleChildScrollView(
           child: Form(
+            key: _formKey,
             child: Column(
               children: <Widget>[
                 CustomFormField(
@@ -55,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   inputAction: TextInputAction.next,
                   controller: TextEditingController(),
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "Password",
@@ -62,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   inputAction: TextInputAction.next,
                   controller: TextEditingController(),
                   theme: theme,
+                  validator: emptyValidator,
                 ),
 
                 Padding(
@@ -72,6 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                     child: CustomElevatedButton(
                       theme: theme,
                       title: "LOG IN",
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -146,5 +170,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return "This field cannot be empty.";
+    }
+    return null;
   }
 }

@@ -13,6 +13,26 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final ThemeController _themeController = Get.find<ThemeController>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _emailController,
+      _passwordController,
+      _confirmPasswordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +67,39 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.only(top: 36.0),
         child: SingleChildScrollView(
           child: Form(
+            key: _formKey,
             child: Column(
               children: <Widget>[
                 CustomFormField(
                   labelName: "Email",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: TextEditingController(),
+                  controller: _emailController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "Password",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: TextEditingController(),
+                  controller: _passwordController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "Confirm Password",
                   textDirection: TextDirection.ltr,
                   inputAction: TextInputAction.next,
-                  controller: TextEditingController(),
+                  controller: _confirmPasswordController,
                   theme: theme,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return emptyValidator(value);
+                    } else if (value != _passwordController.text) {
+                      return "Passwords do not match.";
+                    }
+                    return null;
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -78,6 +109,11 @@ class _SignupPageState extends State<SignupPage> {
                     child: CustomElevatedButton(
                       theme: theme,
                       title: "SIGN UP",
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -140,5 +176,12 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return "This field cannot be empty.";
+    }
+    return null;
   }
 }

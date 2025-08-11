@@ -5,15 +5,17 @@ class CustomElevatedButton extends StatelessWidget {
     super.key,
     required this.theme,
     required this.title,
+    this.onPressed,
   });
 
   final ThemeData theme;
   final String title;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: theme.colorScheme.tertiary,
