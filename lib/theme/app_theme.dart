@@ -31,6 +31,13 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        titleTextStyle: TextStyle(
+          fontFamily: "Allerta",
+          fontWeight: FontWeight.w500,
+          fontSize: 28,
+          letterSpacing: 1.3,
+          color: Color(0xff151515),
+        ),
       ),
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
