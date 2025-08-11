@@ -13,6 +13,7 @@ class MainApp extends StatelessWidget {
 
     return Obx(
       () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeController.themeMode.value,
