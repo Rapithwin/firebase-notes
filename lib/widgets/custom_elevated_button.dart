@@ -23,7 +23,7 @@ class CustomElevatedButton extends StatelessWidget {
       ),
 
       child: Text(
-        "SIGN UP",
+        title,
         style: TextStyle(
           fontFamily: "Allerta",
           color: theme.colorScheme.onPrimary,
