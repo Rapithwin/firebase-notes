@@ -5,15 +5,17 @@ class CustomTextButton extends StatelessWidget {
     super.key,
     required this.theme,
     required this.title,
+    required this.onPressed,
   });
 
   final ThemeData theme;
   final Widget title;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         padding: EdgeInsets.all(0),
         foregroundColor: theme.colorScheme.secondary,

@@ -129,6 +129,19 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: 35,
                     child: CustomTextButton(
+                      onPressed: () async {
+                        final result = await _authController.signInWithGoogle();
+                        if (result.$1 == false) {
+                          Get.snackbar(
+                            "Error",
+                            result.$2.toString(),
+                            backgroundColor: theme.colorScheme.error.withAlpha(
+                              220,
+                            ),
+                            colorText: theme.colorScheme.onError,
+                          );
+                        }
+                      },
                       theme: theme,
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

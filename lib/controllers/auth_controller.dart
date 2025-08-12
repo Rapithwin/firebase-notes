@@ -5,9 +5,11 @@ import 'package:firebase_notes/pages/home_page.dart';
 import 'package:firebase_notes/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth auth;
+  final googleSignIn = GoogleSignIn.instance;
   final void Function(Widget) navigate;
 
   AuthController({required this.auth, required this.navigate});
@@ -75,6 +77,31 @@ class AuthController extends GetxController {
       await auth.signOut();
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  Future<(bool, dynamic)> signInWithGoogle() async {
+    try {
+      googleSignIn.initialize(
+        serverClientId:
+            "36747631786-hhl87t6cqmf5l5e3qp3e1jsb7vg47lrj.apps.googleusercontent.com",
+      );
+      final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      final userCredential = await auth.signInWithCredential(credential);
+      return (true, userCredential);
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+      return (false, e);
+    } on GoogleSignInException catch (e) {
+      log(e.toString());
+      return (false, e);
+    } catch (e) {
+      return (false, e);
     }
   }
 }
