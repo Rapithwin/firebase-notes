@@ -9,7 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
   });
 
   final ThemeData theme;
-  final String title;
+  final Widget title;
   final VoidCallback? onPressed;
 
   @override
@@ -24,14 +24,7 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
 
-      child: Text(
-        title,
-        style: TextStyle(
-          fontFamily: "Allerta",
-          color: theme.colorScheme.onPrimary,
-          fontSize: 20,
-        ),
-      ),
+      child: title,
     );
   }
 }

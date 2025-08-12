@@ -95,7 +95,33 @@ class _LoginPageState extends State<LoginPage> {
                     height: 35,
                     child: CustomElevatedButton(
                       theme: theme,
-                      title: "LOG IN",
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 6,
+                        children: [
+                          Text(
+                            "LOG IN",
+                            style: TextStyle(
+                              fontFamily: "Allerta",
+                              color: theme.colorScheme.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Obx(() {
+                            return Visibility(
+                              visible: _authController.isLoading.value,
+                              child: SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  color: theme.colorScheme.onPrimary,
+                                  strokeWidth: 2.6,
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
                       onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
                           return;

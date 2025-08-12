@@ -16,6 +16,7 @@ class AuthController extends GetxController {
   AuthController({required this.auth, required this.navigate});
 
   late Rx<User?> firebaseUser;
+  final Rx<bool> isLoading = false.obs;
 
   @override
   void onReady() {
@@ -40,10 +41,12 @@ class AuthController extends GetxController {
     String password,
   ) async {
     try {
+      isLoading.value = true;
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
       return (true, null);
     } on FirebaseAuthException catch (e) {
       log(e.message!);
@@ -51,6 +54,8 @@ class AuthController extends GetxController {
     } catch (e) {
       log(e.toString());
       return (false, FirebaseAuthException(code: "unknown"));
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -59,6 +64,7 @@ class AuthController extends GetxController {
     String password,
   ) async {
     try {
+      isLoading.value = true;
       await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -70,6 +76,8 @@ class AuthController extends GetxController {
     } catch (e) {
       log(e.toString());
       return (false, FirebaseAuthException(code: "unknown"));
+    } finally {
+      isLoading.value = false;
     }
   }
 
