@@ -152,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: CustomTextButton(
                       onPressed: () async {
                         final result = await _authController.signInWithGoogle();
-                        if (result.$1 == false) {
+                        if (result.$1 == false && result.$2 != null) {
                           Get.snackbar(
                             "Error",
                             result.$2!.message!,

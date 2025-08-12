@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_notes/constants/exceptions.dart';
 import 'package:firebase_notes/pages/home_page.dart';
 import 'package:firebase_notes/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -97,10 +98,10 @@ class AuthController extends GetxController {
       return (true, userCredential);
     } on FirebaseAuthException catch (e) {
       log(e.toString());
-      return (false, e);
+      return (false, e.message);
     } on GoogleSignInException catch (e) {
       log(e.toString());
-      return (false, e);
+      return (false, e.code.toMessage());
     } catch (e) {
       return (false, e);
     }
