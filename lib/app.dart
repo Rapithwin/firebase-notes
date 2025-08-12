@@ -1,5 +1,5 @@
 import 'package:firebase_notes/controllers/theme_controller.dart';
-import 'package:firebase_notes/pages/signup_page.dart';
+import 'package:firebase_notes/pages/login_page.dart';
 import 'package:firebase_notes/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = Get.put(ThemeController());
+    final themeController = Get.find<ThemeController>();
 
     return Obx(
       () => GetMaterialApp(
@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeController.themeMode.value,
-        home: SignupPage(),
+        home: LoginPage(),
       ),
     );
   }
