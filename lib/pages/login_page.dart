@@ -38,11 +38,9 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      appBar: AppBar(
-        titleSpacing: 30,
+      appBar: CustomAppBar(
+        themeController: _themeController,
         title: Text("LOG IN"),
-        toolbarHeight: 45,
-        actionsPadding: EdgeInsets.only(right: 30),
         actions: [
           GestureDetector(
             onTap: () {
