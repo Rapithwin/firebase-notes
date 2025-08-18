@@ -2,6 +2,7 @@ import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -53,7 +54,22 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: theme.colorScheme.primaryContainer,
         child: Icon(Icons.edit_outlined),
       ),
-      body: Placeholder(),
+      body: MasonryGridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return Card(
+            color: theme.colorScheme.surfaceContainerLow,
+            child: Container(
+              height: (index % 5 + 1) * 80,
+              alignment: Alignment.center,
+              child: Text('Note $index'),
+            ),
+          );
+        },
+      ),
     );
   }
 }
