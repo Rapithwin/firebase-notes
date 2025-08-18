@@ -39,16 +39,21 @@ class _HomePageState extends State<HomePage> {
                     width: 35,
                   ),
           ),
+          SizedBox(
+            width: 10,
+          ),
+          Icon(
+            Icons.settings_outlined,
+            size: 33,
+          ),
         ],
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            authController.signOut();
-          },
-          child: Text("Sing out"),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: theme.colorScheme.primaryContainer,
+        child: Icon(Icons.edit_outlined),
       ),
+      body: Placeholder(),
     );
   }
 }
