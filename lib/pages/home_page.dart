@@ -1,5 +1,6 @@
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -53,9 +54,17 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.settings_outlined,
-            size: 33,
+          GestureDetector(
+            onTap: () {
+              Get.to(
+                () => SettingsPage(),
+                transition: Transition.rightToLeft,
+              );
+            },
+            child: Icon(
+              Icons.settings_outlined,
+              size: 33,
+            ),
           ),
         ],
       ),
