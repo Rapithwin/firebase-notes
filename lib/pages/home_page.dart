@@ -109,10 +109,7 @@ class ListNotes extends StatelessWidget {
                 children: [
                   Text(
                     mockNote.keys.toList()[index],
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: theme.textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 12,
@@ -120,6 +117,7 @@ class ListNotes extends StatelessWidget {
                   Text(
                     mockNote.values.toList()[index],
                     maxLines: 1,
+                    style: theme.textTheme.bodyMedium,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
@@ -166,23 +164,25 @@ class GridNotes extends StatelessWidget {
               ),
 
               child: Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                padding: const EdgeInsets.only(
+                  left: 12.0,
+                  top: 12.0,
+                  right: 8.0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 12,
                   children: [
                     Text(
                       mockNote.keys.toList()[index],
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: theme.textTheme.titleLarge,
                     ),
 
                     Text(
                       mockNote.values.toList()[index],
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium,
                     ),
                   ],
                 ),

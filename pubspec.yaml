@@ -35,3 +35,6 @@ flutter:
         - family: DidactGothic
           fonts:
             - asset: assets/fonts/DidactGothic-Regular.ttf
+        - family: Inter
+          fonts:
+            - asset: assets/fonts/Inter.ttf
