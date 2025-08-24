@@ -33,7 +33,7 @@ class AppTheme {
       ),
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
-        seedColor: Color(0xff8A38F5),
+        seedColor: Color(0xff6750A4),
         surface: Color(0xff151515),
         primary: Color(0xff8A38F5),
         secondary: Color(0xff958DA5),
@@ -76,7 +76,7 @@ class AppTheme {
       ),
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
-        seedColor: Color(0xff8A38F5),
+        seedColor: Color(0xff6750A4),
         surface: Color(0xffEBEBEB),
         onSurface: Color(0xff151515),
         primary: Color(0xffC194FB),
