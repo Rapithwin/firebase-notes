@@ -77,7 +77,6 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
         seedColor: Color(0xff6750A4),
-        surface: Color(0xffEBEBEB),
         onSurface: Color(0xff151515),
         primary: Color(0xffC194FB),
         onPrimary: Color(0xff3F334F),
