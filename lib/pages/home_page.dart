@@ -1,5 +1,6 @@
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,12 @@ class ListNotes extends StatelessWidget {
         return Card(
           color: theme.colorScheme.surfaceContainerHigh,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.to(
+                () => AddEditPage(),
+                transition: Transition.zoom,
+              );
+            },
             borderRadius: BorderRadius.circular(16),
             child: Container(
               // margin: EdgeInsets.only(bottom: 8),s
