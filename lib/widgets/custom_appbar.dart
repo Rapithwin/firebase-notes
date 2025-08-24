@@ -7,16 +7,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required ThemeController themeController,
     required this.title,
     this.actions,
+    required this.titleSpacing,
   }) : _themeController = themeController;
 
   final ThemeController _themeController;
   final Widget title;
   final List<Widget>? actions;
+  final double titleSpacing;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      titleSpacing: 30,
+      titleSpacing: titleSpacing,
       title: title,
       toolbarHeight: 45,
       actionsPadding: EdgeInsets.only(right: 30),

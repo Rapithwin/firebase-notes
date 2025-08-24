@@ -43,6 +43,7 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: CustomAppBar(
+        titleSpacing: 30,
         themeController: _themeController,
         title: Text("SIGN UP"),
         actions: [

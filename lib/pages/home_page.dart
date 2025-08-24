@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: CustomAppBar(
+        titleSpacing: 30,
         themeController: themeController,
         title: Text("NOTES"),
         actions: [

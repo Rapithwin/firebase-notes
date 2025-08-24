@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: CustomAppBar(
+        titleSpacing: 30,
         themeController: _themeController,
         title: Text("LOG IN"),
         actions: [
