@@ -20,46 +20,58 @@ class AddEditPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 26.0),
-        child: Column(
-          spacing: 13,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextField(
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontSize: 30,
-                color: theme.colorScheme.onSurface,
-              ),
-              decoration: InputDecoration.collapsed(
-                hintText: "Title",
-
-                hintStyle: theme.textTheme.titleLarge?.copyWith(
+        padding: const EdgeInsets.only(left: 26.0, right: 26.0),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 13,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextField(
+                style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 30,
-                  color: theme.colorScheme.surfaceContainerHighest,
+                  color: theme.colorScheme.onSurface,
                 ),
-              ),
-            ),
-            Text(
-              "June 21, 2023, 6:00pm",
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            TextField(
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontSize: 24,
-                color: theme.colorScheme.onSurface,
-              ),
-              decoration: InputDecoration.collapsed(
-                hintText: "Start typing...",
+                minLines: 1,
+                maxLines: 3,
+                maxLength: 200,
+                decoration: InputDecoration.collapsed(
+                  hintText: "Title",
 
-                hintStyle: theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 24,
-                  color: theme.colorScheme.surfaceContainerHighest,
+                  hintStyle: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 30,
+                    color: theme.colorScheme.surfaceContainerHighest,
+                  ),
                 ),
               ),
-            ),
-          ],
+              Text(
+                "June 21, 2023, 6:00pm",
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              SingleChildScrollView(
+                child: TextField(
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 24,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  minLines: 1,
+                  maxLines: null,
+                  decoration: InputDecoration.collapsed(
+                    hintText: "Start typing...",
+
+                    hintStyle: theme.textTheme.titleLarge?.copyWith(
+                      fontSize: 24,
+                      color: theme.colorScheme.surfaceContainerHighest,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
