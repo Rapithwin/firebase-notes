@@ -9,6 +9,7 @@ class AddEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.find<ThemeController>();
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: CustomAppBar(
         themeController: themeController,
@@ -17,6 +18,49 @@ class AddEditPage extends StatelessWidget {
         actions: [
           Icon(Icons.check),
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 26.0),
+        child: Column(
+          spacing: 13,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TextField(
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: 30,
+                color: theme.colorScheme.onSurface,
+              ),
+              decoration: InputDecoration.collapsed(
+                hintText: "Title",
+
+                hintStyle: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 30,
+                  color: theme.colorScheme.surfaceContainerHighest,
+                ),
+              ),
+            ),
+            Text(
+              "June 21, 2023, 6:00pm",
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            TextField(
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: 24,
+                color: theme.colorScheme.onSurface,
+              ),
+              decoration: InputDecoration.collapsed(
+                hintText: "Start typing...",
+
+                hintStyle: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 24,
+                  color: theme.colorScheme.surfaceContainerHighest,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
