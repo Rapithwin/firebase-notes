@@ -1,3 +1,4 @@
+import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ThemeController themeController = Get.find<ThemeController>();
+    final AuthController authController = Get.find<AuthController>();
     return Scaffold(
       appBar: CustomAppBar(
         titleSpacing: 0,
@@ -71,7 +73,9 @@ class SettingsPage extends StatelessWidget {
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
-              onTap: () {},
+              onTap: () async {
+                await authController.signOut();
+              },
             ),
           ],
         ),
