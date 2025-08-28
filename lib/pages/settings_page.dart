@@ -24,23 +24,7 @@ class SettingsPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            SettingsTitle(
-              theme: theme,
-              title: "Cloud services",
-            ),
-            SettingsOption(
-              theme: theme,
-              title: "Sync with cloud",
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                size: 18,
-              ),
-              onTap: () {},
-            ),
-            Divider(
-              endIndent: 26,
-              indent: 26,
-            ),
+
             SettingsTitle(title: "Style", theme: theme),
             SettingsOption(
               theme: theme,
