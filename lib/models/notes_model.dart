@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NotesModel {
+  final String? id;
   final String? title;
   final String? content;
   final DateTime? dateModified;
 
   NotesModel({
+    this.id,
     this.title,
     this.content,
     this.dateModified,
@@ -17,6 +19,7 @@ class NotesModel {
   ) {
     final data = snapshot.data();
     return NotesModel(
+      id: snapshot.id,
       title: data?["title"],
       content: data?["content"],
       dateModified: data?["date"],
