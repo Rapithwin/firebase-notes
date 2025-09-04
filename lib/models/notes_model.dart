@@ -1,23 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NotesModel {
-  final String title;
-  final String content;
-  final DateTime dateModified;
+  final String? title;
+  final String? content;
+  final DateTime? dateModified;
 
   NotesModel({
-    required this.title,
-    required this.content,
-    required this.dateModified,
+    this.title,
+    this.content,
+    this.dateModified,
   });
 
-  factory NotesModel.fromMap(Map<String, dynamic> note) => NotesModel(
-    title: note["title"],
-    content: note["content"],
-    dateModified: note["date"],
-  );
+  factory NotesModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return NotesModel(
+      title: data?["title"],
+      content: data?["content"],
+      dateModified: data?["date"],
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-    "title": title,
-    "content": content,
-    "date": dateModified,
+  Map<String, dynamic> toFirestore() => {
+    if (title != null) "title": title,
+    if (content != null) "content": content,
+    if (dateModified != null) "date": dateModified,
   };
 }
