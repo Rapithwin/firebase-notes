@@ -25,6 +25,8 @@ class _AddEditPageState extends State<AddEditPage> {
 
   @override
   void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
     super.dispose();
   }
 
