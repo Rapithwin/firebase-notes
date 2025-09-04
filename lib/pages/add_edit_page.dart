@@ -1,8 +1,10 @@
+import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class AddEditPage extends StatefulWidget {
   final NotesModel? note;
@@ -15,6 +17,9 @@ class AddEditPage extends StatefulWidget {
 class _AddEditPageState extends State<AddEditPage> {
   late TextEditingController _titleController;
   late TextEditingController _contentController;
+
+  final StoreController storeController = Get.find<StoreController>();
+  final ThemeController themeController = Get.find<ThemeController>();
 
   @override
   void initState() {
@@ -30,6 +35,42 @@ class _AddEditPageState extends State<AddEditPage> {
     super.dispose();
   }
 
+  bool _isEditing() => widget.note != null;
+
+  void _onSave() async {
+    final String title = _titleController.text;
+    final String content = _contentController.text;
+    late (bool success, String message) result;
+
+    final NotesModel note = NotesModel(
+      title: title,
+      content: content,
+      dateModified: DateTime.now(),
+    );
+
+    if (title.isEmpty && content.isEmpty) return;
+
+    if (_isEditing()) {
+      result = await storeController.updateNote(note);
+    } else {
+      result = await storeController.createNote(note);
+    }
+
+    if (mounted) {
+      Get.snackbar(
+        result.$1 ? "Success" : "Error",
+        result.$2,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: result.$1
+            ? Get.theme.colorScheme.inverseSurface
+            : Get.theme.colorScheme.error,
+        colorText: result.$1
+            ? Get.theme.colorScheme.onInverseSurface
+            : Get.theme.colorScheme.onError,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.find<ThemeController>();
@@ -40,7 +81,21 @@ class _AddEditPageState extends State<AddEditPage> {
         title: Text(""),
         titleSpacing: 0,
         actions: [
-          Icon(Icons.check),
+          Obx(
+            () => storeController.isLoading.value
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: _onSave,
+                    child: const Icon(Icons.check),
+                  ),
+          ),
         ],
       ),
       body: Padding(
@@ -51,6 +106,7 @@ class _AddEditPageState extends State<AddEditPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextField(
+                controller: _titleController,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 30,
                   color: theme.colorScheme.onSurface,
@@ -68,13 +124,16 @@ class _AddEditPageState extends State<AddEditPage> {
                 ),
               ),
               Text(
-                "June 21, 2023, 6:00pm",
+                DateFormat(
+                  'MMMM d, yyyy, h:mm a',
+                ).format(widget.note?.dateModified ?? DateTime.now()),
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
               SingleChildScrollView(
                 child: TextField(
+                  controller: _contentController,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 24,
                     color: theme.colorScheme.onSurface,
