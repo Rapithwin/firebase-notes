@@ -74,7 +74,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => AddEditPage(), transition: Transition.zoom);
+        },
         backgroundColor: theme.colorScheme.primaryContainer,
         child: Icon(Icons.edit_outlined),
       ),
