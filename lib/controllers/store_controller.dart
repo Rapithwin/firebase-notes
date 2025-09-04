@@ -72,4 +72,29 @@ class StoreController extends GetxController {
           },
         );
   }
+
+  Future<(bool, String)> updateNote(NotesModel note) async {
+    if (auth.currentUser == null) {
+      return (false, "No user is currently logged in.");
+    }
+    isLoading.value = true;
+
+    try {
+      db
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .collection("notes")
+          .doc(note.id)
+          .update(note.toFirestore());
+      return (true, "Note updated successfully.");
+    } on FirebaseException catch (e) {
+      log("Firebase error", error: e);
+      return (false, e.message ?? "Unknown databse error");
+    } catch (e) {
+      log("Error creating note", error: e);
+      return (false, "An unexpected error occurred");
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
