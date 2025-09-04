@@ -80,7 +80,7 @@ class StoreController extends GetxController {
     isLoading.value = true;
 
     try {
-      db
+      await db
           .collection("users")
           .doc(auth.currentUser!.uid)
           .collection("notes")
@@ -91,7 +91,32 @@ class StoreController extends GetxController {
       log("Firebase error", error: e);
       return (false, e.message ?? "Unknown databse error");
     } catch (e) {
-      log("Error creating note", error: e);
+      log("Error updating note", error: e);
+      return (false, "An unexpected error occurred");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<(bool, String)> deleteNote(String noteId) async {
+    if (auth.currentUser == null) {
+      return (false, "No user is currently logged in.");
+    }
+    isLoading.value = true;
+
+    try {
+      await db
+          .collection("users")
+          .doc(auth.currentUser!.uid)
+          .collection("notes")
+          .doc(noteId)
+          .delete();
+      return (true, "Note deleted successfully");
+    } on FirebaseException catch (e) {
+      log("Firebase error", error: e);
+      return (false, e.message ?? "Unknown databse error");
+    } catch (e) {
+      log("Error deleting note", error: e);
       return (false, "An unexpected error occurred");
     } finally {
       isLoading.value = false;
