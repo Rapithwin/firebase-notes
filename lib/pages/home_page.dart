@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
+import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
@@ -77,7 +80,21 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26.0),
-        child: ListNotes(mockNote: mockNote, theme: theme),
+        child: GetX<StoreController>(
+          init: StoreController(auth: FirebaseAuth.instance),
+          initState: (_) {},
+          builder: (controller) {
+            if (controller.notes.isEmpty) {
+              return Center(
+                child: Text(
+                  "No notes found",
+                  style: theme.textTheme.headlineSmall,
+                ),
+              );
+            }
+            return ListNotes(notes: controller.notes, theme: theme);
+          },
+        ),
       ),
     );
   }
@@ -86,17 +103,17 @@ class _HomePageState extends State<HomePage> {
 class ListNotes extends StatelessWidget {
   const ListNotes({
     super.key,
-    required this.mockNote,
+    required this.notes,
     required this.theme,
   });
 
-  final Map<String, String> mockNote;
+  final List<NotesModel> notes;
   final ThemeData theme;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: mockNote.length,
+      itemCount: notes.length,
       itemBuilder: (context, index) {
         return Card(
           color: theme.colorScheme.surfaceContainerHigh,
@@ -124,14 +141,14 @@ class ListNotes extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    mockNote.keys.toList()[index],
+                    notes[index].title ?? "",
                     style: theme.textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 12,
                   ),
                   Text(
-                    mockNote.values.toList()[index],
+                    notes[index].content ?? "",
                     maxLines: 1,
                     style: theme.textTheme.bodyMedium,
                     overflow: TextOverflow.ellipsis,
