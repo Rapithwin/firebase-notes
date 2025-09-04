@@ -9,10 +9,16 @@ class StoreController extends GetxController {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final FirebaseAuth auth;
 
-  late Rx<NotesModel?> note;
+  final RxList<NotesModel> notes = <NotesModel>[].obs;
   final Rx<bool> isLoading = false.obs;
 
   StoreController({required this.auth});
+
+  @override
+  void onInit() {
+    super.onInit();
+    notes.bindStream(readNotes());
+  }
 
   Future<(bool, String)> createNote(NotesModel note) async {
     if (auth.currentUser == null) {
@@ -22,7 +28,7 @@ class StoreController extends GetxController {
 
     try {
       await db
-          .collection("user")
+          .collection("users")
           .doc(auth.currentUser?.uid)
           .collection("notes")
           .withConverter(
@@ -41,5 +47,29 @@ class StoreController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Stream<List<NotesModel>> readNotes() {
+    if (auth.currentUser == null) {
+      return Stream.value([]);
+    }
+
+    return db
+        .collection("users")
+        .doc(auth.currentUser!.uid)
+        .collection("notes")
+        .withConverter(
+          fromFirestore: NotesModel.fromFirestore,
+          toFirestore: (note, options) => note.toFirestore(),
+        )
+        .snapshots()
+        .map(
+          (querySnapshot) {
+            // Map the stream of snapshots to a list of NotesModel
+            return querySnapshot.docs
+                .map((docSnapshot) => docSnapshot.data())
+                .toList();
+          },
+        );
   }
 }
