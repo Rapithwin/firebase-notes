@@ -1,10 +1,32 @@
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddEditPage extends StatelessWidget {
-  const AddEditPage({super.key});
+class AddEditPage extends StatefulWidget {
+  final NotesModel? note;
+  const AddEditPage({super.key, this.note});
+
+  @override
+  State<AddEditPage> createState() => _AddEditPageState();
+}
+
+class _AddEditPageState extends State<AddEditPage> {
+  late TextEditingController _titleController;
+  late TextEditingController _contentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.note?.title);
+    _contentController = TextEditingController(text: widget.note?.content);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
