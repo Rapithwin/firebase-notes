@@ -43,6 +43,7 @@ class _AddEditPageState extends State<AddEditPage> {
     late (bool success, String message) result;
 
     final NotesModel note = NotesModel(
+      id: widget.note?.id,
       title: title,
       content: content,
       dateModified: DateTime.now(),
