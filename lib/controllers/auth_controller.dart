@@ -19,13 +19,15 @@ class AuthController extends GetxController {
   final Rx<bool> isLoading = false.obs;
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
 
     firebaseUser = Rx<User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
 
     ever(firebaseUser, _setInitialScreen);
+    // Ensure the locally cached user still exists on the server (detect remote deletion)
+    await _ensureUserValid();
   }
 
   _setInitialScreen(User? user) {
@@ -33,6 +35,31 @@ class AuthController extends GetxController {
       navigate(const HomePage());
     } else {
       navigate(LoginPage());
+    }
+  }
+
+  // Reload the current user to force a server check. If the user was removed
+  // remotely (for example in the emulator), reload may fail or auth.currentUser
+  // can become null — in that case sign out locally and navigate to login.
+  Future<void> _ensureUserValid() async {
+    final user = auth.currentUser;
+    if (user == null) return;
+
+    try {
+      await user.reload();
+      // After reload the SDK may have cleared the user
+      if (auth.currentUser == null) {
+        await signOut();
+        navigate(LoginPage());
+      }
+    } on FirebaseAuthException catch (e) {
+      log('User reload failed: ${e.code} ${e.message}');
+      try {
+        await signOut();
+      } catch (_) {}
+      navigate(LoginPage());
+    } catch (e) {
+      log('Unexpected error while validating user: $e');
     }
   }
 
