@@ -122,7 +122,9 @@ class ListNotes extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Get.to(
-                () => AddEditPage(),
+                () => AddEditPage(
+                  note: notes[index],
+                ),
                 transition: Transition.zoom,
               );
             },

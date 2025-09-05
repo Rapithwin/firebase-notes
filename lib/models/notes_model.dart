@@ -22,7 +22,7 @@ class NotesModel {
       id: snapshot.id,
       title: data?["title"],
       content: data?["content"],
-      dateModified: data?["date"],
+      dateModified: data?["date"].toDate(),
     );
   }
 
