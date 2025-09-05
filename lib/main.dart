@@ -21,7 +21,7 @@ void main() async {
     ),
   );
   Get.put(ThemeController());
-  Get.put(StoreController(auth: auth));
+  Get.lazyPut(() => StoreController(auth: auth), fenix: true);
 
   if (kDebugMode) {
     log("Using firebase emulator", level: 0);
