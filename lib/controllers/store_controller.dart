@@ -29,7 +29,7 @@ class StoreController extends GetxController {
     try {
       await db
           .collection("users")
-          .doc(auth.currentUser!.email)
+          .doc(auth.currentUser!.uid)
           .collection("notes")
           .withConverter(
             fromFirestore: NotesModel.fromFirestore,
@@ -56,7 +56,7 @@ class StoreController extends GetxController {
 
     return db
         .collection("users")
-        .doc(auth.currentUser!.email)
+        .doc(auth.currentUser!.uid)
         .collection("notes")
         .withConverter(
           fromFirestore: NotesModel.fromFirestore,
@@ -82,7 +82,7 @@ class StoreController extends GetxController {
     try {
       await db
           .collection("users")
-          .doc(auth.currentUser!.email)
+          .doc(auth.currentUser!.uid)
           .collection("notes")
           .doc(note.id)
           .update(note.toFirestore());
@@ -107,7 +107,7 @@ class StoreController extends GetxController {
     try {
       await db
           .collection("users")
-          .doc(auth.currentUser!.email)
+          .doc(auth.currentUser!.uid)
           .collection("notes")
           .doc(noteId)
           .delete();
