@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
+import 'package:firebase_notes/controllers/item_selection_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
@@ -19,59 +20,71 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final authController = Get.find<AuthController>();
   final themeController = Get.find<ThemeController>();
-
-  Map<String, String> mockNote = {
-    "title 1": "Hello this is title 1 ",
-    "title 2": "Hello this is title 2 and it's supposed to be 2 ",
-    "title 3":
-        "Hello this is title 3 and I'm writing it a little bit longer than the other one.",
-    "title 4":
-        "Hello there and welcome to title 4. I am deliberately writing this longer than usual to see how many lines it will be.",
-  };
+  final selectedController = Get.find<ItemSelectionController>();
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      appBar: AppBar(
-        titleSpacing: 30,
-        // themeController: themeController,
-        actionsPadding: EdgeInsets.only(right: 30),
-        title: Text("NOTES"),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              themeController.toggleTheme();
-            },
-            child: Get.isDarkMode
-                ? Image.asset(
-                    "assets/images/solar_sun-bold.png",
-                    height: 35,
-                    width: 35,
-                  )
-                : Image.asset(
-                    "assets/images/line-md_moon-filled.png",
-                    height: 35,
-                    width: 35,
-                  ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(
-                () => SettingsPage(),
-                transition: Transition.rightToLeft,
-              );
-            },
-            child: Icon(
-              Icons.settings_outlined,
-              size: 33,
-            ),
-          ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(
+          () => selectedController.isSelected.value == false
+              ? AppBar(
+                  titleSpacing: 30,
+                  // themeController: themeController,
+                  actionsPadding: EdgeInsets.only(right: 30),
+                  title: Text("NOTES"),
+                  actions: [
+                    GestureDetector(
+                      onTap: () {
+                        themeController.toggleTheme();
+                      },
+                      child: Get.isDarkMode
+                          ? Image.asset(
+                              "assets/images/solar_sun-bold.png",
+                              height: 35,
+                              width: 35,
+                            )
+                          : Image.asset(
+                              "assets/images/line-md_moon-filled.png",
+                              height: 35,
+                              width: 35,
+                            ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => SettingsPage(),
+                          transition: Transition.rightToLeft,
+                        );
+                      },
+                      child: Icon(
+                        Icons.settings_outlined,
+                        size: 33,
+                      ),
+                    ),
+                  ],
+                )
+              : AppBar(
+                  titleSpacing: 30,
+                  title: Text("test"),
+                  actionsPadding: EdgeInsets.only(right: 30),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        selectedController.isSelected.value = false;
+                        selectedController.selectedIndex?.value = null;
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                  ],
+                ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -102,7 +115,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ListNotes extends StatelessWidget {
+class ListNotes extends StatefulWidget {
   const ListNotes({
     super.key,
     required this.notes,
@@ -113,51 +126,71 @@ class ListNotes extends StatelessWidget {
   final ThemeData theme;
 
   @override
+  State<ListNotes> createState() => _ListNotesState();
+}
+
+class _ListNotesState extends State<ListNotes> {
+  final selectedController = Get.find<ItemSelectionController>();
+
+  @override
   Widget build(BuildContext context) {
+    final colorScheme = widget.theme.colorScheme;
+
     return ListView.builder(
-      itemCount: notes.length,
+      itemCount: widget.notes.length,
       itemBuilder: (context, index) {
         return Card(
-          color: theme.colorScheme.surfaceContainerHigh,
+          color: widget.theme.colorScheme.surfaceContainerHigh,
           child: InkWell(
             onTap: () {
               Get.to(
                 () => AddEditPage(
-                  note: notes[index],
+                  note: widget.notes[index],
                 ),
                 transition: Transition.zoom,
               );
             },
+
+            onLongPress: () {
+              selectedController.toggleIndex(index);
+            },
+
             borderRadius: BorderRadius.circular(16),
-            child: Container(
-              // margin: EdgeInsets.only(bottom: 8),s
-              padding: EdgeInsets.only(
-                left: 15,
-                top: 10,
-                right: 15,
-              ),
-              width: Get.size.width,
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    notes[index].title ?? "",
-                    style: theme.textTheme.titleLarge,
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    notes[index].content ?? "",
-                    maxLines: 1,
-                    style: theme.textTheme.bodyMedium,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+            child: Obx(
+              () => Container(
+                // margin: EdgeInsets.only(bottom: 8),s
+                padding: EdgeInsets.only(
+                  left: 15,
+                  top: 10,
+                  right: 15,
+                ),
+                width: Get.size.width,
+                height: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: selectedController.selectedIndex?.value == index
+                      ? colorScheme.surfaceContainerHighest
+                      : colorScheme.surfaceContainerHigh,
+                ),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.notes[index].title ?? "",
+                      style: widget.theme.textTheme.titleLarge,
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      widget.notes[index].content ?? "",
+                      maxLines: 1,
+                      style: widget.theme.textTheme.bodyMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
