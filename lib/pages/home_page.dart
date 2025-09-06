@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
                       child: Get.isDarkMode
                           ? Image.asset(
                               "assets/images/solar_sun-bold.png",
-                              height: 35,
-                              width: 35,
+                              height: 30,
+                              width: 30,
                             )
                           : Image.asset(
                               "assets/images/line-md_moon-filled.png",
-                              height: 35,
-                              width: 35,
+                              height: 30,
+                              width: 30,
                             ),
                     ),
                     SizedBox(
@@ -71,16 +71,25 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : AppBar(
-                  titleSpacing: 30,
-                  title: Text("test"),
-                  actionsPadding: EdgeInsets.only(right: 30),
+                  actionsPadding: EdgeInsets.only(right: 23),
+                  leadingWidth: 90,
+                  leading: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.delete_outline_outlined,
+                      size: 30,
+                    ),
+                  ),
                   actions: [
                     IconButton(
                       onPressed: () {
                         selectedController.isSelected.value = false;
                         selectedController.selectedIndex?.value = null;
                       },
-                      icon: Icon(Icons.close),
+                      icon: Icon(
+                        Icons.close,
+                        size: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -139,26 +148,28 @@ class _ListNotesState extends State<ListNotes> {
     return ListView.builder(
       itemCount: widget.notes.length,
       itemBuilder: (context, index) {
-        return Card(
-          color: widget.theme.colorScheme.surfaceContainerHigh,
-          child: InkWell(
-            onTap: () {
-              Get.to(
-                () => AddEditPage(
-                  note: widget.notes[index],
-                ),
-                transition: Transition.zoom,
-              );
-            },
+        return Obx(
+          () => Card(
+            color: selectedController.selectedIndex?.value == index
+                ? colorScheme.secondaryContainer
+                : colorScheme.surfaceContainerHighest,
+            child: InkWell(
+              splashFactory: InkSparkle.splashFactory,
+              onTap: () {
+                Get.to(
+                  () => AddEditPage(
+                    note: widget.notes[index],
+                  ),
+                  transition: Transition.zoom,
+                );
+              },
 
-            onLongPress: () {
-              selectedController.toggleIndex(index);
-            },
+              onLongPress: () {
+                selectedController.toggleIndex(index);
+              },
 
-            borderRadius: BorderRadius.circular(16),
-            child: Obx(
-              () => Container(
-                // margin: EdgeInsets.only(bottom: 8),s
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
                 padding: EdgeInsets.only(
                   left: 15,
                   top: 10,
@@ -167,10 +178,7 @@ class _ListNotesState extends State<ListNotes> {
                 width: Get.size.width,
                 height: 80,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: selectedController.selectedIndex?.value == index
-                      ? colorScheme.surfaceContainerHighest
-                      : colorScheme.surfaceContainerHigh,
+                  borderRadius: BorderRadius.circular(12),
                 ),
 
                 child: Column(
