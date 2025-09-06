@@ -1,7 +1,6 @@
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
-import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -74,27 +73,34 @@ class _AddEditPageState extends State<AddEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find<ThemeController>();
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: CustomAppBar(
-        themeController: themeController,
+      appBar: AppBar(
         title: Text(""),
         titleSpacing: 0,
+        actionsPadding: EdgeInsets.only(right: 18.0),
+        leadingWidth: 72,
+        leading: BackButton(),
         actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.undo)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.redo)),
+
           Obx(
             () => storeController.isLoading.value
-                ? SizedBox(
-                    height: 20,
-                    width: 20,
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 18.0),
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
 
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                      ),
                     ),
                   )
-                : GestureDetector(
-                    onTap: _onSave,
-                    child: const Icon(Icons.check),
+                : IconButton(
+                    onPressed: _onSave,
+                    icon: const Icon(Icons.check),
                   ),
           ),
         ],

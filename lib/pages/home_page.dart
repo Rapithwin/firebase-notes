@@ -5,7 +5,6 @@ import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
-import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -35,9 +34,10 @@ class _HomePageState extends State<HomePage> {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      appBar: CustomAppBar(
+      appBar: AppBar(
         titleSpacing: 30,
-        themeController: themeController,
+        // themeController: themeController,
+        actionsPadding: EdgeInsets.only(right: 30),
         title: Text("NOTES"),
         actions: [
           GestureDetector(
