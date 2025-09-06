@@ -8,9 +8,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.actions,
     required this.titleSpacing,
-  }) : _themeController = themeController;
+  });
 
-  final ThemeController _themeController;
   final Widget title;
   final List<Widget>? actions;
   final double titleSpacing;
