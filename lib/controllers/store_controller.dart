@@ -11,6 +11,7 @@ class StoreController extends GetxController {
 
   final RxList<NotesModel> notes = <NotesModel>[].obs;
   final Rx<bool> isLoading = false.obs;
+  final RxSet<String> selectedIds = <String>{}.obs;
 
   StoreController({required this.auth});
 
@@ -18,6 +19,28 @@ class StoreController extends GetxController {
   void onInit() {
     super.onInit();
     notes.bindStream(readNotes());
+  }
+
+  void toggleSelected(int index) {
+    final id = notes[index].id;
+    if (id == null) return;
+    if (selectedIds.contains(id)) {
+      selectedIds.remove(id);
+    } else {
+      selectedIds.add(id);
+    }
+  }
+
+  bool isSelectedById(String? id) {
+    return id != null && selectedIds.contains(id);
+  }
+
+  bool anyNotesSelected() {
+    return selectedIds.isNotEmpty;
+  }
+
+  void clearSelected() {
+    selectedIds.clear();
   }
 
   Future<(bool, String)> createNote(NotesModel note) async {
