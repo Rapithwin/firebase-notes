@@ -5,12 +5,14 @@ class NotesModel {
   final String? title;
   final String? content;
   final DateTime? dateModified;
+  bool isSelected;
 
   NotesModel({
     this.id,
     this.title,
     this.content,
     this.dateModified,
+    this.isSelected = false,
   });
 
   factory NotesModel.fromFirestore(
