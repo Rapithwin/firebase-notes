@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
-import 'package:firebase_notes/controllers/item_selection_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
-import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final authController = Get.find<AuthController>();
   final themeController = Get.find<ThemeController>();
-  final selectedController = Get.find<ItemSelectionController>();
+  final storeController = Get.find<StoreController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Obx(
-          () => selectedController.isSelected.value == false
+          () => !storeController.anyNotesSelected()
               ? AppBar(
                   titleSpacing: 30,
                   // themeController: themeController,
@@ -84,8 +82,7 @@ class _HomePageState extends State<HomePage> {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        selectedController.isSelected.value = false;
-                        selectedController.selectedIndex?.value = null;
+                        storeController.clearSelected();
                       },
                       icon: Icon(
                         Icons.close,
@@ -117,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             }
-            return ListNotes(notes: controller.notes, theme: theme);
+            return ListNotes(controller: controller, theme: theme);
           },
         ),
       ),
@@ -128,11 +125,11 @@ class _HomePageState extends State<HomePage> {
 class ListNotes extends StatefulWidget {
   const ListNotes({
     super.key,
-    required this.notes,
+    required this.controller,
     required this.theme,
   });
 
-  final List<NotesModel> notes;
+  final StoreController controller;
   final ThemeData theme;
 
   @override
@@ -140,33 +137,34 @@ class ListNotes extends StatefulWidget {
 }
 
 class _ListNotesState extends State<ListNotes> {
-  final selectedController = Get.find<ItemSelectionController>();
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = widget.theme.colorScheme;
+    final notes = widget.controller.notes;
 
     return ListView.builder(
-      itemCount: widget.notes.length,
+      itemCount: notes.length,
       itemBuilder: (context, index) {
         return Obx(
           () => Card(
-            color: selectedController.selectedIndex?.value == index
+            color: widget.controller.isSelectedById(notes[index].id)
                 ? colorScheme.secondaryContainer
                 : colorScheme.surfaceContainerHighest,
             child: InkWell(
               splashFactory: InkSparkle.splashFactory,
               onTap: () {
-                Get.to(
-                  () => AddEditPage(
-                    note: widget.notes[index],
-                  ),
-                  transition: Transition.zoom,
-                );
+                widget.controller.anyNotesSelected()
+                    ? widget.controller.toggleSelected(index)
+                    : Get.to(
+                        () => AddEditPage(
+                          note: notes[index],
+                        ),
+                        transition: Transition.zoom,
+                      );
               },
 
               onLongPress: () {
-                selectedController.toggleIndex(index);
+                widget.controller.toggleSelected(index);
               },
 
               borderRadius: BorderRadius.circular(16),
@@ -186,49 +184,55 @@ class _ListNotesState extends State<ListNotes> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.notes[index].title ?? "",
+                      notes[index].title ?? "",
                       style: widget.theme.textTheme.titleLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      widget.notes[index].content ?? "",
+                      notes[index].content ?? "",
                       maxLines: 1,
                       style: widget.theme.textTheme.bodyMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
+
                     SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          DateFormat(
-                            'MMMM d, yyyy',
-                          ).format(widget.notes[index].dateModified!),
-                          maxLines: 1,
-                          style: widget.theme.textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            DateFormat(
+                              'MMMM d, yyyy',
+                            ).format(notes[index].dateModified!),
+                            maxLines: 1,
+                            style: widget.theme.textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
 
-                        Transform.scale(
-                          scale: 1.3,
-                          child: Checkbox(
-                            shape: CircleBorder(),
+                          Visibility(
+                            visible: widget.controller.anyNotesSelected(),
+                            child: Transform.scale(
+                              scale: 1.3,
+                              child: Checkbox(
+                                shape: CircleBorder(),
 
-                            value:
-                                selectedController.selectedIndex?.value ==
-                                index,
-                            onChanged: (_) {
-                              selectedController.toggleIndex(index);
-                            },
+                                value: widget.controller.isSelectedById(
+                                  notes[index].id,
+                                ),
+                                onChanged: (_) {
+                                  widget.controller.toggleSelected(index);
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
