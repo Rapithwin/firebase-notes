@@ -14,23 +14,44 @@ class AddEditPage extends StatefulWidget {
 }
 
 class _AddEditPageState extends State<AddEditPage> {
-  late TextEditingController _titleController;
-  late TextEditingController _contentController;
-
+  late TextEditingController _titleController, _contentController;
+  late UndoHistoryController _contentUndoController;
   final StoreController storeController = Get.find<StoreController>();
   final ThemeController themeController = Get.find<ThemeController>();
+
+  final FocusNode _titleFocusNode = FocusNode();
+  final FocusNode _contentFocusNode = FocusNode();
+
+  bool _showUndoRedo = true;
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.note?.title);
     _contentController = TextEditingController(text: widget.note?.content);
+    _contentUndoController = UndoHistoryController();
+
+    _titleFocusNode.addListener(_handleFocusChange);
+    _contentFocusNode.addListener(_handleFocusChange);
+    // Initial state
+    _showUndoRedo = _contentFocusNode.hasFocus;
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _showUndoRedo = _contentFocusNode.hasFocus;
+    });
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _contentController.dispose();
+    _contentUndoController.dispose();
+    _titleFocusNode.removeListener(_handleFocusChange);
+    _contentFocusNode.removeListener(_handleFocusChange);
+    _titleFocusNode.dispose();
+    _contentFocusNode.dispose();
     super.dispose();
   }
 
@@ -82,8 +103,38 @@ class _AddEditPageState extends State<AddEditPage> {
         leadingWidth: 72,
         leading: BackButton(),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.undo)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.redo)),
+          if (_showUndoRedo)
+            ValueListenableBuilder(
+              valueListenable: _contentUndoController,
+              builder: (context, value, child) {
+                return Row(
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {
+                        _contentUndoController.undo();
+                      },
+                      icon: Icon(
+                        Icons.undo,
+                        color: value.canUndo
+                            ? Get.theme.colorScheme.onSurface
+                            : Get.theme.colorScheme.onSurface.withAlpha(110),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _contentUndoController.redo();
+                      },
+                      icon: Icon(
+                        Icons.redo,
+                        color: value.canRedo
+                            ? Get.theme.colorScheme.onSurface
+                            : Get.theme.colorScheme.onSurface.withAlpha(110),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
 
           Obx(
             () => storeController.isLoading.value
@@ -92,7 +143,6 @@ class _AddEditPageState extends State<AddEditPage> {
                     child: SizedBox(
                       height: 20,
                       width: 20,
-
                       child: CircularProgressIndicator(
                         strokeWidth: 2.5,
                       ),
@@ -114,6 +164,7 @@ class _AddEditPageState extends State<AddEditPage> {
             children: <Widget>[
               TextField(
                 controller: _titleController,
+                focusNode: _titleFocusNode,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 30,
                   color: theme.colorScheme.onSurface,
@@ -123,7 +174,6 @@ class _AddEditPageState extends State<AddEditPage> {
                 maxLength: 200,
                 decoration: InputDecoration.collapsed(
                   hintText: "Title",
-
                   hintStyle: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 30,
                     color: theme.colorScheme.surfaceContainerHighest,
@@ -140,6 +190,8 @@ class _AddEditPageState extends State<AddEditPage> {
               ),
               SingleChildScrollView(
                 child: TextField(
+                  undoController: _contentUndoController,
+                  focusNode: _contentFocusNode,
                   controller: _contentController,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 24,
@@ -149,7 +201,6 @@ class _AddEditPageState extends State<AddEditPage> {
                   maxLines: null,
                   decoration: InputDecoration.collapsed(
                     hintText: "Start typing...",
-
                     hintStyle: theme.textTheme.titleLarge?.copyWith(
                       fontSize: 24,
                       color: theme.colorScheme.surfaceContainerHighest,
