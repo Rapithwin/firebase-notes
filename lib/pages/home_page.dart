@@ -9,6 +9,7 @@ import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -176,7 +177,7 @@ class _ListNotesState extends State<ListNotes> {
                   right: 15,
                 ),
                 width: Get.size.width,
-                height: 80,
+                height: 110,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -189,12 +190,25 @@ class _ListNotesState extends State<ListNotes> {
                       style: widget.theme.textTheme.titleLarge,
                     ),
                     SizedBox(
-                      height: 12,
+                      height: 8,
                     ),
                     Text(
                       widget.notes[index].content ?? "",
                       maxLines: 1,
                       style: widget.theme.textTheme.bodyMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      DateFormat(
+                        'MMMM d, yyyy',
+                      ).format(widget.notes[index].dateModified!),
+                      maxLines: 1,
+                      style: widget.theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
