@@ -177,7 +177,7 @@ class _ListNotesState extends State<ListNotes> {
                   right: 15,
                 ),
                 width: Get.size.width,
-                height: 110,
+                height: 130,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -201,15 +201,34 @@ class _ListNotesState extends State<ListNotes> {
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      DateFormat(
-                        'MMMM d, yyyy',
-                      ).format(widget.notes[index].dateModified!),
-                      maxLines: 1,
-                      style: widget.theme.textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          DateFormat(
+                            'MMMM d, yyyy',
+                          ).format(widget.notes[index].dateModified!),
+                          maxLines: 1,
+                          style: widget.theme.textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        Transform.scale(
+                          scale: 1.3,
+                          child: Checkbox(
+                            shape: CircleBorder(),
+
+                            value:
+                                selectedController.selectedIndex?.value ==
+                                index,
+                            onChanged: (_) {
+                              selectedController.toggleIndex(index);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
