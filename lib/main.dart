@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/app.dart';
 import 'package:firebase_notes/constants/auth_constants.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
-import 'package:firebase_notes/controllers/item_selection_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -22,7 +21,6 @@ void main() async {
     ),
   );
   Get.put(ThemeController());
-  Get.put(ItemSelectionController());
   Get.lazyPut(() => StoreController(auth: auth), fenix: true);
 
   if (kDebugMode) {
