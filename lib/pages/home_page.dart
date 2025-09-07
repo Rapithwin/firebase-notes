@@ -73,7 +73,55 @@ class _HomePageState extends State<HomePage> {
                   actionsPadding: EdgeInsets.only(right: 23),
                   leadingWidth: 90,
                   leading: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.dialog(
+                        transitionCurve: Curves.ease,
+                        AlertDialog(
+                          alignment: Alignment.bottomCenter,
+                          backgroundColor:
+                              theme.colorScheme.surfaceContainerLow,
+                          title: Text(
+                            "DELETE NOTES",
+                            textAlign: TextAlign.center,
+                          ),
+
+                          content: Text(
+                            "Delete ${storeController.selectedIds.length} item(s)?",
+                            textAlign: TextAlign.center,
+                          ),
+                          actionsAlignment: MainAxisAlignment.center,
+
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                storeController.deleteNote();
+                                storeController.clearSelected();
+                                Get.back();
+                              },
+                              style: TextButton.styleFrom(
+                                overlayColor: theme.colorScheme.error,
+                              ),
+                              child: Text(
+                                "Delete",
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  color: theme.colorScheme.error,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => Get.back(),
+
+                              child: Text(
+                                "Cancel",
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                     icon: Icon(
                       Icons.delete_outline_outlined,
                       size: 30,
