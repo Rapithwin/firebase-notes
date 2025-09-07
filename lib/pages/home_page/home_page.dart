@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/home_page/widgets/widgets.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -149,19 +152,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26.0),
-        child: GetX<StoreController>(
-          init: StoreController(auth: FirebaseAuth.instance),
-          initState: (_) {},
-          builder: (controller) {
-            if (controller.notes.isEmpty) {
-              return Center(
-                child: Text(
-                  "No notes found",
-                  style: theme.textTheme.headlineSmall,
-                ),
-              );
-            }
-            return ListNotes(controller: controller, theme: theme);
+        child: StreamBuilder<List<NotesModel>>(
+          stream: storeController.readNotes(),
+
+          builder: (context, snapshot) {
+            Get.log(snapshot.connectionState.toString());
+            return Skeletonizer(
+              enabled: snapshot.connectionState == ConnectionState.waiting,
+              child: ListNotes(controller: storeController, theme: theme),
+            );
           },
         ),
       ),
