@@ -5,12 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/models/notes_model.dart';
 import 'package:get/get.dart';
 
+// ignore: constant_identifier_names
+const int MAX_DELETE_PER_BATCH = 500;
+
 class StoreController extends GetxController {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final FirebaseAuth auth;
 
   final RxList<NotesModel> notes = <NotesModel>[].obs;
   final Rx<bool> isLoading = false.obs;
+  final Rx<bool> isDeleteLoading = false.obs;
   final RxSet<String> selectedIds = <String>{}.obs;
 
   StoreController({required this.auth});
@@ -121,19 +125,22 @@ class StoreController extends GetxController {
     }
   }
 
-  Future<(bool, String)> deleteNote(String noteId) async {
+  Future<(bool, String)> deleteNote() async {
     if (auth.currentUser == null) {
       return (false, "No user is currently logged in.");
     }
-    isLoading.value = true;
+    isDeleteLoading.value = true;
+    final batch = db.batch();
+    final notesCollection = db
+        .collection("users")
+        .doc(auth.currentUser!.uid)
+        .collection("notes");
 
     try {
-      await db
-          .collection("users")
-          .doc(auth.currentUser!.uid)
-          .collection("notes")
-          .doc(noteId)
-          .delete();
+      for (String id in selectedIds) {
+        batch.delete(notesCollection.doc(id));
+      }
+      batch.commit();
       return (true, "Note deleted successfully");
     } on FirebaseException catch (e) {
       log("Firebase error", error: e);
@@ -142,7 +149,7 @@ class StoreController extends GetxController {
       log("Error deleting note", error: e);
       return (false, "An unexpected error occurred");
     } finally {
-      isLoading.value = false;
+      isDeleteLoading.value = false;
     }
   }
 }
