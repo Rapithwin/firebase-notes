@@ -28,7 +28,9 @@ class SettingsPage extends StatelessWidget {
             ),
 
             SettingsTitle(title: "Style", theme: theme),
+
             SettingsOption(
+              enabled: true,
               theme: theme,
               title: "Font size",
               trailing: "Medium",
@@ -39,6 +41,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () {},
             ),
             SettingsOption(
+              enabled: true,
               theme: theme,
               title: "Layout",
               trailing: "List view",
@@ -57,6 +60,7 @@ class SettingsPage extends StatelessWidget {
               title: "Account",
             ),
             SettingsOption(
+              enabled: false,
               theme: theme,
               title: "Account details",
               icon: Icon(
@@ -66,16 +70,20 @@ class SettingsPage extends StatelessWidget {
               onTap: () {},
             ),
 
-            SettingsOption(
-              theme: theme,
-              title: "Sign out",
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                size: 18,
+            InkWell(
+              onTap: () {},
+              child: SettingsOption(
+                enabled: false,
+                theme: theme,
+                title: "Sign out",
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 18,
+                ),
+                onTap: () async {
+                  await authController.signOut();
+                },
               ),
-              onTap: () async {
-                await authController.signOut();
-              },
             ),
           ],
         ),
@@ -115,6 +123,7 @@ class SettingsOption extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.onTap,
+    required this.enabled,
     this.trailing,
   });
 
@@ -123,36 +132,51 @@ class SettingsOption extends StatelessWidget {
   final Icon icon;
   final GestureTapCallback onTap;
   final String? trailing;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: SizedBox(
-        height: 65,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                title,
-                style: theme.textTheme.headlineSmall,
-              ),
-              Row(
-                spacing: 16,
-                children: [
-                  Text(
-                    trailing ?? "",
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+    return SizedBox(
+      height: 65,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 18.0, left: 26.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              title,
+              style: theme.textTheme.headlineSmall,
+            ),
+
+            PopupMenuButton(
+              position: PopupMenuPosition.over,
+              enabled: enabled,
+              borderRadius: BorderRadius.circular(12),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    child: Text("medium"),
                   ),
-                  icon,
-                ],
+                ];
+              },
+
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  spacing: 16,
+                  children: [
+                    Text(
+                      trailing ?? "",
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    icon,
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
