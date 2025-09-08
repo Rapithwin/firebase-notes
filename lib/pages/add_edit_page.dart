@@ -1,3 +1,4 @@
+import 'package:firebase_notes/controllers/style_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
@@ -18,6 +19,7 @@ class _AddEditPageState extends State<AddEditPage> {
   late UndoHistoryController _contentUndoController;
   final StoreController storeController = Get.find<StoreController>();
   final ThemeController themeController = Get.find<ThemeController>();
+  final StyleController styleController = Get.find<StyleController>();
 
   final FocusNode _titleFocusNode = FocusNode();
   final FocusNode _contentFocusNode = FocusNode();
@@ -94,6 +96,7 @@ class _AddEditPageState extends State<AddEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double scale = styleController.scaleFactor;
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -165,8 +168,9 @@ class _AddEditPageState extends State<AddEditPage> {
               TextField(
                 controller: _titleController,
                 focusNode: _titleFocusNode,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 30,
+                style: TextStyle(
+                  fontSize: 30 * scale,
+                  fontFamily: "Inter",
                   color: theme.colorScheme.onSurface,
                 ),
                 minLines: 1,
@@ -174,8 +178,9 @@ class _AddEditPageState extends State<AddEditPage> {
                 maxLength: 200,
                 decoration: InputDecoration.collapsed(
                   hintText: "Title",
-                  hintStyle: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 30,
+                  hintStyle: TextStyle(
+                    fontSize: 30 * scale,
+                    fontFamily: "Inter",
                     color: theme.colorScheme.surfaceContainerHighest,
                   ),
                 ),
@@ -184,7 +189,9 @@ class _AddEditPageState extends State<AddEditPage> {
                 DateFormat(
                   'MMMM d, yyyy, h:mm a',
                 ).format(widget.note?.dateModified ?? DateTime.now()),
-                style: theme.textTheme.labelLarge?.copyWith(
+                style: TextStyle(
+                  fontSize: 12.0 * scale,
+                  fontFamily: "Inter",
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -193,16 +200,17 @@ class _AddEditPageState extends State<AddEditPage> {
                   undoController: _contentUndoController,
                   focusNode: _contentFocusNode,
                   controller: _contentController,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 24,
+                  style: TextStyle(
+                    fontSize: 18 * scale,
                     color: theme.colorScheme.onSurface,
                   ),
                   minLines: 1,
                   maxLines: null,
                   decoration: InputDecoration.collapsed(
                     hintText: "Start typing...",
-                    hintStyle: theme.textTheme.titleLarge?.copyWith(
-                      fontSize: 24,
+                    hintStyle: TextStyle(
+                      fontSize: 18 * scale,
+                      fontFamily: "Inter",
                       color: theme.colorScheme.surfaceContainerHighest,
                     ),
                   ),

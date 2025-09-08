@@ -1,5 +1,8 @@
+import 'package:firebase_notes/controllers/style_controller.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/enums/enums.dart';
+import 'package:firebase_notes/extensions/extensions.dart';
 import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +15,7 @@ class SettingsPage extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final ThemeController themeController = Get.find<ThemeController>();
     final AuthController authController = Get.find<AuthController>();
+    final StyleController styleController = Get.find<StyleController>();
     return Scaffold(
       appBar: CustomAppBar(
         titleSpacing: 0,
@@ -29,20 +33,53 @@ class SettingsPage extends StatelessWidget {
 
             SettingsTitle(title: "Style", theme: theme),
 
-            SettingsOption(
-              enabled: true,
-              theme: theme,
-              title: "Font size",
-              trailing: "Medium",
-              icon: Icon(
-                Icons.arrow_drop_down,
-                size: 25,
+            Obx(
+              () => SettingsOption(
+                menuItems: [
+                  PopupMenuItem(
+                    child: Text("Huge"),
+                    onTap: () {
+                      styleController.changeFontSize(FontSize.huge);
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text("Large"),
+                    onTap: () {
+                      styleController.changeFontSize(FontSize.large);
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text("Medium"),
+                    onTap: () {
+                      styleController.changeFontSize(FontSize.medium);
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text("Small"),
+                    onTap: () {
+                      styleController.changeFontSize(FontSize.small);
+                    },
+                  ),
+                ],
+                enabled: true,
+                theme: theme,
+                title: "Font size",
+                trailing: styleController.fontSize.value.fontToString,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  size: 25,
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
             ),
             SettingsOption(
+              menuItems: [
+                PopupMenuItem(child: Text("List view")),
+                PopupMenuItem(child: Text("Grid view")),
+              ],
               enabled: true,
               theme: theme,
+
               title: "Layout",
               trailing: "List view",
               icon: Icon(
@@ -124,6 +161,7 @@ class SettingsOption extends StatelessWidget {
     required this.icon,
     required this.onTap,
     required this.enabled,
+    this.menuItems,
     this.trailing,
   });
 
@@ -133,6 +171,7 @@ class SettingsOption extends StatelessWidget {
   final GestureTapCallback onTap;
   final String? trailing;
   final bool enabled;
+  final List<PopupMenuItem>? menuItems;
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +192,7 @@ class SettingsOption extends StatelessWidget {
               enabled: enabled,
               borderRadius: BorderRadius.circular(12),
               itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    child: Text("medium"),
-                  ),
-                ];
+                return menuItems ?? [];
               },
 
               child: Padding(
