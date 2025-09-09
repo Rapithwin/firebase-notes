@@ -1,6 +1,8 @@
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
+import 'package:firebase_notes/controllers/style_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/enums/enums.dart';
 import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:firebase_notes/pages/home_page/widgets/widgets.dart';
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   final authController = Get.find<AuthController>();
   final themeController = Get.find<ThemeController>();
   final storeController = Get.find<StoreController>();
+  final styleController = Get.find<StyleController>();
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +160,11 @@ class _HomePageState extends State<HomePage> {
             Get.log(snapshot.connectionState.toString());
             return Skeletonizer(
               enabled: snapshot.connectionState == ConnectionState.waiting,
-              child: GridNotes(controller: storeController, theme: theme),
+              child: Obx(
+                () => styleController.layout.value == Layout.grid
+                    ? GridNotes(controller: storeController, theme: theme)
+                    : ListNotes(controller: storeController, theme: theme),
+              ),
             );
           },
         ),
