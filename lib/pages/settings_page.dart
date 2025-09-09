@@ -72,21 +72,33 @@ class SettingsPage extends StatelessWidget {
                 onTap: () {},
               ),
             ),
-            SettingsOption(
-              menuItems: [
-                PopupMenuItem(child: Text("List view")),
-                PopupMenuItem(child: Text("Grid view")),
-              ],
-              enabled: true,
-              theme: theme,
+            Obx(
+              () => SettingsOption(
+                menuItems: [
+                  PopupMenuItem(
+                    child: Text("List view"),
+                    onTap: () {
+                      styleController.changeLayout(Layout.list);
+                    },
+                  ),
+                  PopupMenuItem(
+                    child: Text("Grid view"),
+                    onTap: () {
+                      styleController.changeLayout(Layout.grid);
+                    },
+                  ),
+                ],
+                enabled: true,
+                theme: theme,
 
-              title: "Layout",
-              trailing: "List view",
-              icon: Icon(
-                Icons.arrow_drop_down,
-                size: 25,
+                title: "Layout",
+                trailing: styleController.layout.value.layoutToString,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  size: 25,
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
             ),
             Divider(
               endIndent: 26,
