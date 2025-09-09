@@ -10,6 +10,7 @@ class StyleController extends GetxController {
   @override
   void onInit() {
     loadFontSize();
+    loadLayout();
     super.onInit();
   }
 
@@ -38,7 +39,15 @@ class StyleController extends GetxController {
     await prefs.setString("fontSize", inputFontSize.fontToString);
   }
 
-  void changeLayout(Layout inputLayout) {
+  void loadLayout() async {
+    final prefs = await SharedPreferences.getInstance();
+    final prefsLayout = prefs.getString("layoutType")!.stringToLayout;
+    layout.value = prefsLayout;
+  }
+
+  void changeLayout(Layout inputLayout) async {
     layout.value = inputLayout;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("layoutType", inputLayout.layoutToString);
   }
 }

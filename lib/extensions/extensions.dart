@@ -15,7 +15,18 @@ extension FontSizeToString on FontSize {
   }
 }
 
-extension StringToFontSize on String {
+extension LayoutToString on Layout {
+  String get layoutToString {
+    switch (this) {
+      case Layout.grid:
+        return "Grid";
+      case Layout.list:
+        return "List";
+    }
+  }
+}
+
+extension StringToStyle on String {
   FontSize get stringToFontSize {
     switch (this) {
       case "Small":
@@ -28,6 +39,16 @@ extension StringToFontSize on String {
         return FontSize.huge;
       default:
         throw Exception("Unsupported string");
+    }
+  }
+
+  Layout get stringToLayout {
+    if (this == "Grid") {
+      return Layout.grid;
+    } else if (this == "List") {
+      return Layout.list;
+    } else {
+      throw Exception("Unsupported string");
     }
   }
 }
