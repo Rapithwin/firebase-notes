@@ -31,9 +31,9 @@ class _HomePageState extends State<HomePage> {
         child: Obx(
           () => !storeController.anyNotesSelected()
               ? AppBar(
-                  titleSpacing: 30,
+                  titleSpacing: 25,
                   // themeController: themeController,
-                  actionsPadding: EdgeInsets.only(right: 30),
+                  actionsPadding: EdgeInsets.only(right: 25),
                   title: Text("NOTES"),
                   actions: [
                     GestureDetector(
@@ -70,8 +70,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : AppBar(
-                  actionsPadding: EdgeInsets.only(right: 23),
-                  leadingWidth: 90,
+                  actionsPadding: EdgeInsets.only(right: 15),
+                  leadingWidth: 80,
                   leading: IconButton(
                     onPressed: () {
                       Get.dialog(
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.edit_outlined),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 26.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: StreamBuilder<List<NotesModel>>(
           stream: storeController.readNotes(),
 
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
             Get.log(snapshot.connectionState.toString());
             return Skeletonizer(
               enabled: snapshot.connectionState == ConnectionState.waiting,
-              child: ListNotes(controller: storeController, theme: theme),
+              child: GridNotes(controller: storeController, theme: theme),
             );
           },
         ),
