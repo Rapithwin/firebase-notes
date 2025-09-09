@@ -2,6 +2,7 @@ import 'package:firebase_notes/controllers/style_controller.dart';
 import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/models/notes_model.dart';
+import 'package:firebase_notes/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -92,6 +93,7 @@ class _AddEditPageState extends State<AddEditPage> {
             : Get.theme.colorScheme.onError,
       );
     }
+    Get.offAll(() => HomePage());
   }
 
   @override
