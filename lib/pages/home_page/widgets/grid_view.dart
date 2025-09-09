@@ -53,78 +53,76 @@ class _GridNotesState extends State<GridNotes> {
                 widget.controller.toggleSelected(index);
               },
 
-              child: Flexible(
-                child: Container(
-                  height:
-                      notes[index].content != null && notes[index].title != null
-                      ? notes[index].content!.length.toDouble() + 120
-                      : 200,
-                  constraints: BoxConstraints(
-                    minHeight: Get.size.height / 14,
-                    maxHeight: Get.size.height / 4.5,
+              child: Container(
+                height:
+                    notes[index].content != null && notes[index].title != null
+                    ? notes[index].content!.length.toDouble() + 120
+                    : 200,
+                constraints: BoxConstraints(
+                  minHeight: Get.size.height / 14,
+                  maxHeight: Get.size.height / 4.5,
+                ),
+
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 12.0,
+                    top: 12.0,
+                    right: 8.0,
                   ),
-
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 12.0,
-                      top: 12.0,
-                      right: 8.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          notes[index].title ?? "",
-                          style: widget.theme.textTheme.titleLarge,
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          notes[index].content ?? "",
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: widget.theme.textTheme.bodyMedium,
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  DateFormat(
-                                    'MMMM d, yyyy',
-                                  ).format(notes[index].dateModified!),
-                                  maxLines: 2,
-                                  style: widget.theme.textTheme.bodySmall
-                                      ?.copyWith(
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-
-                              Visibility(
-                                visible: widget.controller.anyNotesSelected(),
-                                child: Transform.scale(
-                                  scale: 1.3,
-                                  child: Checkbox(
-                                    shape: CircleBorder(),
-
-                                    value: widget.controller.isSelectedById(
-                                      notes[index].id,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        notes[index].title ?? "",
+                        style: widget.theme.textTheme.titleLarge,
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        notes[index].content ?? "",
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: widget.theme.textTheme.bodyMedium,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                DateFormat(
+                                  'MMMM d, yyyy',
+                                ).format(notes[index].dateModified!),
+                                maxLines: 2,
+                                style: widget.theme.textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: colorScheme.onSurfaceVariant,
                                     ),
-                                    onChanged: (_) {
-                                      widget.controller.toggleSelected(index);
-                                    },
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+
+                            Visibility(
+                              visible: widget.controller.anyNotesSelected(),
+                              child: Transform.scale(
+                                scale: 1.3,
+                                child: Checkbox(
+                                  shape: CircleBorder(),
+
+                                  value: widget.controller.isSelectedById(
+                                    notes[index].id,
                                   ),
+                                  onChanged: (_) {
+                                    widget.controller.toggleSelected(index);
+                                  },
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
