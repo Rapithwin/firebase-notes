@@ -120,7 +120,9 @@ class SettingsPage extends StatelessWidget {
             ),
 
             InkWell(
-              onTap: () {},
+              onTap: () {
+                authController.signOut();
+              },
               child: SettingsOption(
                 enabled: false,
                 theme: theme,
