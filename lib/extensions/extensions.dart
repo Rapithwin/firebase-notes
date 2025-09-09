@@ -19,9 +19,9 @@ extension LayoutToString on Layout {
   String get layoutToString {
     switch (this) {
       case Layout.grid:
-        return "Grid";
+        return "Grid view";
       case Layout.list:
-        return "List";
+        return "List view";
     }
   }
 }
@@ -43,9 +43,9 @@ extension StringToStyle on String {
   }
 
   Layout get stringToLayout {
-    if (this == "Grid") {
+    if (this == "Grid view") {
       return Layout.grid;
-    } else if (this == "List") {
+    } else if (this == "List view") {
       return Layout.list;
     } else {
       throw Exception("Unsupported string");
