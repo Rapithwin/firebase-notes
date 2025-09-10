@@ -117,6 +117,33 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<(bool, FirebaseAuthException?)> changePassword(
+    String oldPassword,
+    String newPassowrd,
+  ) async {
+    try {
+      isLoading.value = true;
+      final credential = await auth.signInWithEmailAndPassword(
+        email: firebaseUser.value!.email!,
+        password: oldPassword,
+      );
+
+      firebaseUser.value?.reauthenticateWithCredential(
+        credential.credential!,
+      );
+      firebaseUser.value?.updatePassword(newPassowrd);
+      return (true, null);
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+      return (false, e);
+    } catch (e) {
+      log(e.toString());
+      return (false, FirebaseAuthException(code: "unknown"));
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<(bool, dynamic)> signInWithGoogle() async {
     try {
       googleSignIn.initialize(
