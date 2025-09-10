@@ -3,6 +3,7 @@ import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/enums/enums.dart';
 import 'package:firebase_notes/extensions/extensions.dart';
+import 'package:firebase_notes/pages/account_details.dart';
 import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,6 @@ class SettingsPage extends StatelessWidget {
                   Icons.arrow_drop_down,
                   size: 25,
                 ),
-                onTap: () {},
               ),
             ),
             Obx(
@@ -97,7 +97,6 @@ class SettingsPage extends StatelessWidget {
                   Icons.arrow_drop_down,
                   size: 25,
                 ),
-                onTap: () {},
               ),
             ),
             Divider(
@@ -108,15 +107,22 @@ class SettingsPage extends StatelessWidget {
               theme: theme,
               title: "Account",
             ),
-            SettingsOption(
-              enabled: false,
-              theme: theme,
-              title: "Account details",
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                size: 18,
+            InkWell(
+              onTap: () {
+                Get.to(
+                  () => AccountDetails(),
+                  transition: Transition.rightToLeft,
+                );
+              },
+              child: SettingsOption(
+                enabled: false,
+                theme: theme,
+                title: "Account details",
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 18,
+                ),
               ),
-              onTap: () {},
             ),
 
             InkWell(
@@ -173,9 +179,6 @@ class SettingsPage extends StatelessWidget {
                   Icons.arrow_forward_ios,
                   size: 18,
                 ),
-                onTap: () async {
-                  await authController.signOut();
-                },
               ),
             ),
           ],
@@ -215,7 +218,6 @@ class SettingsOption extends StatelessWidget {
     required this.theme,
     required this.title,
     required this.icon,
-    required this.onTap,
     required this.enabled,
     this.menuItems,
     this.trailing,
@@ -224,7 +226,6 @@ class SettingsOption extends StatelessWidget {
   final ThemeData theme;
   final String title;
   final Icon icon;
-  final GestureTapCallback onTap;
   final String? trailing;
   final bool enabled;
   final List<PopupMenuItem>? menuItems;
