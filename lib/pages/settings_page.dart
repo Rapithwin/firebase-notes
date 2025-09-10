@@ -121,12 +121,54 @@ class SettingsPage extends StatelessWidget {
 
             InkWell(
               onTap: () {
-                authController.signOut();
+                Get.dialog(
+                  AlertDialog(
+                    alignment: Alignment.bottomCenter,
+                    backgroundColor: theme.colorScheme.surfaceContainerLow,
+                    title: Text(
+                      "LOG OUT",
+                      textAlign: TextAlign.center,
+                    ),
+
+                    content: Text(
+                      "Log out of your account?",
+                      textAlign: TextAlign.center,
+                    ),
+                    actionsAlignment: MainAxisAlignment.center,
+
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          authController.signOut();
+                        },
+                        style: TextButton.styleFrom(
+                          overlayColor: theme.colorScheme.error,
+                        ),
+                        child: Text(
+                          "Log out",
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.error,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Get.back(),
+
+                        child: Text(
+                          "Cancel",
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
               child: SettingsOption(
                 enabled: false,
                 theme: theme,
-                title: "Sign out",
+                title: "Log out",
                 icon: Icon(
                   Icons.arrow_forward_ios,
                   size: 18,
