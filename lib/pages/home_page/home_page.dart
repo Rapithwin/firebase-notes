@@ -24,6 +24,15 @@ class _HomePageState extends State<HomePage> {
   final storeController = Get.find<StoreController>();
   final styleController = Get.find<StyleController>();
 
+  final fakeNotes = List.filled(
+    15,
+    NotesModel(
+      content: "Some content",
+      title: "title",
+      dateModified: DateTime(2020, 9, 7),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -158,12 +167,37 @@ class _HomePageState extends State<HomePage> {
 
           builder: (context, snapshot) {
             Get.log(snapshot.connectionState.toString());
+            Get.log(snapshot.data.toString());
+
+            if (snapshot.data != null && snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  "No notes found",
+                  style: theme.textTheme.headlineMedium,
+                ),
+              );
+            }
+            final List<NotesModel> notes = snapshot.data == null
+                ? fakeNotes
+                : storeController.notes;
+
             return Skeletonizer(
               enabled: snapshot.connectionState == ConnectionState.waiting,
+              effect: PulseEffect(),
               child: Obx(
-                () => styleController.layout.value == Layout.grid
-                    ? GridNotes(controller: storeController, theme: theme)
-                    : ListNotes(controller: storeController, theme: theme),
+                () {
+                  return styleController.layout.value == Layout.grid
+                      ? GridNotes(
+                          controller: storeController,
+                          theme: theme,
+                          notes: notes,
+                        )
+                      : ListNotes(
+                          controller: storeController,
+                          theme: theme,
+                          notes: notes,
+                        );
+                },
               ),
             );
           },

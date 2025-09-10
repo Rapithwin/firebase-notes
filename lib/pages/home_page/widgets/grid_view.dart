@@ -11,10 +11,12 @@ class GridNotes extends StatefulWidget {
     super.key,
     required this.controller,
     required this.theme,
+    required this.notes,
   });
 
   final StoreController controller;
   final ThemeData theme;
+  final List<NotesModel> notes;
 
   @override
   State<GridNotes> createState() => _GridNotesState();
@@ -23,7 +25,7 @@ class GridNotes extends StatefulWidget {
 class _GridNotesState extends State<GridNotes> {
   @override
   Widget build(BuildContext context) {
-    final List<NotesModel> notes = widget.controller.notes;
+    final List<NotesModel> notes = widget.notes;
     final colorScheme = widget.theme.colorScheme;
 
     return MasonryGridView.count(

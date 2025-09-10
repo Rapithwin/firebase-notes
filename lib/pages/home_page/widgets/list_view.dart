@@ -1,4 +1,5 @@
 import 'package:firebase_notes/controllers/store_controller.dart';
+import 'package:firebase_notes/models/notes_model.dart';
 import 'package:firebase_notes/pages/add_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,10 +10,12 @@ class ListNotes extends StatefulWidget {
     super.key,
     required this.controller,
     required this.theme,
+    required this.notes,
   });
 
   final StoreController controller;
   final ThemeData theme;
+  final List<NotesModel> notes;
 
   @override
   State<ListNotes> createState() => _ListNotesState();
@@ -22,7 +25,7 @@ class _ListNotesState extends State<ListNotes> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = widget.theme.colorScheme;
-    final notes = widget.controller.notes;
+    final notes = widget.notes;
 
     return ListView.builder(
       itemCount: notes.length,
