@@ -14,13 +14,11 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final ThemeController themeController = Get.find<ThemeController>();
     final AuthController authController = Get.find<AuthController>();
     final StyleController styleController = Get.find<StyleController>();
     return Scaffold(
       appBar: CustomAppBar(
         titleSpacing: 0,
-        themeController: themeController,
         title: Text("SETTINGS"),
       ),
       body: SingleChildScrollView(

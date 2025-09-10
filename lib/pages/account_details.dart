@@ -1,3 +1,4 @@
+import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetails extends StatelessWidget {
@@ -6,7 +7,10 @@ class AccountDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: CustomAppBar(
+        titleSpacing: 0,
+        title: Text("ACCOUNT DETAILS"),
+      ),
     );
   }
 }

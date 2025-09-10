@@ -1,10 +1,8 @@
-import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
-    required ThemeController themeController,
     required this.title,
     this.actions,
     required this.titleSpacing,
