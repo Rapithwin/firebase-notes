@@ -1,4 +1,5 @@
 import 'package:firebase_notes/controllers/auth_controller.dart';
+import 'package:firebase_notes/pages/change_password.dart';
 import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,12 @@ class AccountDetails extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  () => ChangePassword(),
+                  transition: Transition.rightToLeft,
+                );
+              },
               child: SettingsOption(
                 theme: theme,
                 title: "Change password",
