@@ -1,6 +1,5 @@
 import 'package:firebase_notes/controllers/style_controller.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
-import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:firebase_notes/enums/enums.dart';
 import 'package:firebase_notes/extensions/extensions.dart';
 import 'package:firebase_notes/pages/account_details.dart';
