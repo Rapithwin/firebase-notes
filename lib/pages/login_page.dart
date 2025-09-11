@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
+import 'package:firebase_notes/pages/reset_passowrd.dart';
 import 'package:firebase_notes/pages/signup_page.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -211,6 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 GestureDetector(
+                  onTap: () => Get.to(() => const ResetPassowrdPage()),
                   child: Text(
                     "Reset Password",
                     style: TextStyle(
