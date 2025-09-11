@@ -141,6 +141,16 @@ class SettingsPage extends StatelessWidget {
 
                     actions: [
                       TextButton(
+                        onPressed: () => Get.back(),
+
+                        child: Text(
+                          "Cancel",
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                      TextButton(
                         onPressed: () {
                           authController.signOut();
                         },
@@ -151,16 +161,6 @@ class SettingsPage extends StatelessWidget {
                           "Log out",
                           style: theme.textTheme.labelLarge?.copyWith(
                             color: theme.colorScheme.error,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => Get.back(),
-
-                        child: Text(
-                          "Cancel",
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.primary,
                           ),
                         ),
                       ),
