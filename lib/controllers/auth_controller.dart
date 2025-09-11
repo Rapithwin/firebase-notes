@@ -162,6 +162,23 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<(bool, FirebaseAuthException?)> resetPassword(String email) async {
+    try {
+      isLoading.value = true;
+
+      await auth.sendPasswordResetEmail(email: email);
+      return (true, null);
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+      return (false, e);
+    } catch (e) {
+      log(e.toString());
+      return (false, FirebaseAuthException(code: "unknown"));
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<(bool, dynamic)> signInWithGoogle() async {
     try {
       googleSignIn.initialize(
