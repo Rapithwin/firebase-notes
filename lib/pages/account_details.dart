@@ -14,7 +14,7 @@ class AccountDetails extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         titleSpacing: 0,
         title: Text("ACCOUNT DETAILS"),
       ),
@@ -23,11 +23,11 @@ class AccountDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 5,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: 26,
                 vertical: 5.0,
               ),
@@ -38,13 +38,13 @@ class AccountDetails extends StatelessWidget {
               subtitle: Text(authController.firebaseUser.value!.email!),
             ),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: 26,
                 vertical: 5.0,
               ),
               onTap: () {
                 Get.to(
-                  () => ChangePassword(),
+                  () => const ChangePassword(),
                   transition: Transition.rightToLeft,
                 );
               },
@@ -56,8 +56,8 @@ class AccountDetails extends StatelessWidget {
               ),
               subtitle: authController.isPasswordProvider
                   ? null
-                  : Text("Not available for Google Sign-in"),
-              trailing: Icon(Icons.password_outlined),
+                  : const Text("Not available for Google Sign-in"),
+              trailing: const Icon(Icons.password_outlined),
             ),
           ],
         ),

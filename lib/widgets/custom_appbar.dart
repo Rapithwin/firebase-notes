@@ -18,11 +18,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: titleSpacing,
       title: title,
       toolbarHeight: 45,
-      actionsPadding: EdgeInsets.only(right: 30),
+      actionsPadding: const EdgeInsets.only(right: 30),
       actions: actions,
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

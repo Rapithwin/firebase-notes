@@ -34,7 +34,7 @@ class AuthController extends GetxController {
     if (user != null) {
       navigate(const HomePage());
     } else {
-      navigate(LoginPage());
+      navigate(const LoginPage());
     }
   }
 
@@ -57,14 +57,14 @@ class AuthController extends GetxController {
       // After reload the SDK may have cleared the user
       if (auth.currentUser == null) {
         await signOut();
-        navigate(LoginPage());
+        navigate(const LoginPage());
       }
     } on FirebaseAuthException catch (e) {
       log('User reload failed: ${e.code} ${e.message}');
       try {
         await signOut();
       } catch (_) {}
-      navigate(LoginPage());
+      navigate(const LoginPage());
     } catch (e) {
       log('Unexpected error while validating user: $e');
     }

@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
     final AuthController authController = Get.find<AuthController>();
     final StyleController styleController = Get.find<StyleController>();
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         titleSpacing: 0,
         title: Text("SETTINGS"),
       ),
@@ -25,7 +25,7 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 5,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
@@ -35,25 +35,25 @@ class SettingsPage extends StatelessWidget {
               () => SettingsOption(
                 menuItems: [
                   PopupMenuItem(
-                    child: Text("Huge"),
+                    child: const Text("Huge"),
                     onTap: () {
                       styleController.changeFontSize(FontSize.huge);
                     },
                   ),
                   PopupMenuItem(
-                    child: Text("Large"),
+                    child: const Text("Large"),
                     onTap: () {
                       styleController.changeFontSize(FontSize.large);
                     },
                   ),
                   PopupMenuItem(
-                    child: Text("Medium"),
+                    child: const Text("Medium"),
                     onTap: () {
                       styleController.changeFontSize(FontSize.medium);
                     },
                   ),
                   PopupMenuItem(
-                    child: Text("Small"),
+                    child: const Text("Small"),
                     onTap: () {
                       styleController.changeFontSize(FontSize.small);
                     },
@@ -63,7 +63,7 @@ class SettingsPage extends StatelessWidget {
                 theme: theme,
                 title: "Font size",
                 trailing: styleController.fontSize.value.fontToString,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
                   size: 25,
                 ),
@@ -73,13 +73,13 @@ class SettingsPage extends StatelessWidget {
               () => SettingsOption(
                 menuItems: [
                   PopupMenuItem(
-                    child: Text("List view"),
+                    child: const Text("List view"),
                     onTap: () {
                       styleController.changeLayout(Layout.list);
                     },
                   ),
                   PopupMenuItem(
-                    child: Text("Grid view"),
+                    child: const Text("Grid view"),
                     onTap: () {
                       styleController.changeLayout(Layout.grid);
                     },
@@ -90,13 +90,13 @@ class SettingsPage extends StatelessWidget {
 
                 title: "Layout",
                 trailing: styleController.layout.value.layoutToString,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
                   size: 25,
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               endIndent: 26,
               indent: 26,
             ),
@@ -107,7 +107,7 @@ class SettingsPage extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.to(
-                  () => AccountDetails(),
+                  () => const AccountDetails(),
                   transition: Transition.rightToLeft,
                 );
               },
@@ -115,7 +115,7 @@ class SettingsPage extends StatelessWidget {
                 enabled: false,
                 theme: theme,
                 title: "Account details",
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_forward_ios,
                   size: 18,
                 ),
@@ -128,12 +128,12 @@ class SettingsPage extends StatelessWidget {
                   AlertDialog(
                     alignment: Alignment.bottomCenter,
                     backgroundColor: theme.colorScheme.surfaceContainerLow,
-                    title: Text(
+                    title: const Text(
                       "LOG OUT",
                       textAlign: TextAlign.center,
                     ),
 
-                    content: Text(
+                    content: const Text(
                       "Log out of your account?",
                       textAlign: TextAlign.center,
                     ),
@@ -172,7 +172,7 @@ class SettingsPage extends StatelessWidget {
                 enabled: false,
                 theme: theme,
                 title: "Log out",
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_forward_ios,
                   size: 18,
                 ),

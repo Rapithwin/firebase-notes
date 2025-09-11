@@ -54,7 +54,7 @@ class _ListNotesState extends State<ListNotes> {
 
               borderRadius: BorderRadius.circular(16),
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 15,
                   top: 10,
                   right: 15,
@@ -74,7 +74,7 @@ class _ListNotesState extends State<ListNotes> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -105,7 +105,7 @@ class _ListNotesState extends State<ListNotes> {
                             child: Transform.scale(
                               scale: 1.3,
                               child: Checkbox(
-                                shape: CircleBorder(),
+                                shape: const CircleBorder(),
 
                                 value: widget.controller.isSelectedById(
                                   notes[index].id,

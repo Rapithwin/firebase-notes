@@ -14,7 +14,7 @@ class AppTheme {
         ),
       ),
 
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(fontFamily: "Allerta"),
         displayMedium: TextStyle(fontFamily: "Allerta"),
         displaySmall: TextStyle(fontFamily: "Allerta"),
@@ -33,13 +33,13 @@ class AppTheme {
       ),
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
-        seedColor: Color(0xff6750A4),
-        surface: Color(0xff151515),
-        primary: Color(0xff8A38F5),
-        secondary: Color(0xff958DA5),
-        tertiary: Color(0xffFB80FF),
-        outline: Color(0xff868686),
-        onPrimary: Color(0xffEBEBEB),
+        seedColor: const Color(0xff6750A4),
+        surface: const Color(0xff151515),
+        primary: const Color(0xff8A38F5),
+        secondary: const Color(0xff958DA5),
+        tertiary: const Color(0xffFB80FF),
+        outline: const Color(0xff868686),
+        onPrimary: const Color(0xffEBEBEB),
       ),
     );
   }
@@ -57,7 +57,7 @@ class AppTheme {
           color: Color(0xff151515),
         ),
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(fontFamily: "Allerta"),
         displayMedium: TextStyle(fontFamily: "Allerta"),
         displaySmall: TextStyle(fontFamily: "Allerta"),
@@ -76,13 +76,13 @@ class AppTheme {
       ),
       colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.light,
-        seedColor: Color(0xff6750A4),
-        onSurface: Color(0xff151515),
-        primary: Color(0xffC194FB),
-        onPrimary: Color(0xff3F334F),
-        secondary: Color.fromARGB(255, 107, 102, 116),
-        tertiary: Color(0xff7D5260),
-        outline: Color(0xff868686),
+        seedColor: const Color(0xff6750A4),
+        onSurface: const Color(0xff151515),
+        primary: const Color(0xffC194FB),
+        onPrimary: const Color(0xff3F334F),
+        secondary: const Color.fromARGB(255, 107, 102, 116),
+        tertiary: const Color(0xff7D5260),
+        outline: const Color(0xff868686),
       ),
     );
   }

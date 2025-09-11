@@ -78,7 +78,7 @@ class _GridNotesState extends State<GridNotes> {
                         notes[index].title ?? "",
                         style: widget.theme.textTheme.titleLarge,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -110,7 +110,7 @@ class _GridNotesState extends State<GridNotes> {
                               child: Transform.scale(
                                 scale: 1.3,
                                 child: Checkbox(
-                                  shape: CircleBorder(),
+                                  shape: const CircleBorder(),
 
                                   value: widget.controller.isSelectedById(
                                     notes[index].id,

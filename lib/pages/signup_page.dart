@@ -44,7 +44,7 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: theme.colorScheme.surface,
       appBar: CustomAppBar(
         titleSpacing: 30,
-        title: Text("SIGN UP"),
+        title: const Text("SIGN UP"),
         actions: [
           GestureDetector(
             onTap: () {
@@ -214,12 +214,12 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Already have an account? ",
                       style: TextStyle(fontSize: 16),
                     ),
                     GestureDetector(
-                      onTap: () => Get.off(() => LoginPage()),
+                      onTap: () => Get.off(() => const LoginPage()),
                       child: Text(
                         "Log In.",
                         style: TextStyle(

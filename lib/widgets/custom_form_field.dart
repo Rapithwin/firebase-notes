@@ -37,7 +37,7 @@ class CustomFormField extends StatelessWidget {
         children: [
           Text(
             labelName,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "DidactGothic",
               fontSize: 20,
             ),

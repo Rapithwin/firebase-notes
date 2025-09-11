@@ -39,14 +39,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Obx(
           () => !storeController.anyNotesSelected()
               ? AppBar(
                   titleSpacing: 25,
                   // themeController: themeController,
-                  actionsPadding: EdgeInsets.only(right: 25),
-                  title: Text("NOTES"),
+                  actionsPadding: const EdgeInsets.only(right: 25),
+                  title: const Text("NOTES"),
                   actions: [
                     GestureDetector(
                       onTap: () {
@@ -64,17 +64,17 @@ class _HomePageState extends State<HomePage> {
                               width: 30,
                             ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
                       onTap: () {
                         Get.to(
-                          () => SettingsPage(),
+                          () => const SettingsPage(),
                           transition: Transition.rightToLeft,
                         );
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.settings_outlined,
                         size: 33,
                       ),
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : AppBar(
-                  actionsPadding: EdgeInsets.only(right: 15),
+                  actionsPadding: const EdgeInsets.only(right: 15),
                   leadingWidth: 80,
                   leading: IconButton(
                     onPressed: () {
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.bottomCenter,
                           backgroundColor:
                               theme.colorScheme.surfaceContainerLow,
-                          title: Text(
+                          title: const Text(
                             "DELETE NOTES",
                             textAlign: TextAlign.center,
                           ),
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete_outline_outlined,
                       size: 30,
                     ),
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         storeController.clearSelected();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         size: 30,
                       ),
@@ -155,10 +155,10 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => AddEditPage(), transition: Transition.zoom);
+          Get.to(() => const AddEditPage(), transition: Transition.zoom);
         },
         backgroundColor: theme.colorScheme.primaryContainer,
-        child: Icon(Icons.edit_outlined),
+        child: const Icon(Icons.edit_outlined),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
 
             return Skeletonizer(
               enabled: snapshot.connectionState == ConnectionState.waiting,
-              effect: PulseEffect(),
+              effect: const PulseEffect(),
               child: Obx(
                 () {
                   return styleController.layout.value == Layout.grid

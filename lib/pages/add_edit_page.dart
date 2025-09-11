@@ -93,7 +93,7 @@ class _AddEditPageState extends State<AddEditPage> {
             : Get.theme.colorScheme.onError,
       );
     }
-    Get.offAll(() => HomePage());
+    Get.offAll(() => const HomePage());
   }
 
   @override
@@ -102,11 +102,11 @@ class _AddEditPageState extends State<AddEditPage> {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(""),
+        title: const Text(""),
         titleSpacing: 0,
-        actionsPadding: EdgeInsets.only(right: 18.0),
+        actionsPadding: const EdgeInsets.only(right: 18.0),
         leadingWidth: 72,
-        leading: BackButton(),
+        leading: const BackButton(),
         actions: [
           if (_showUndoRedo)
             ValueListenableBuilder(
@@ -143,8 +143,8 @@ class _AddEditPageState extends State<AddEditPage> {
 
           Obx(
             () => storeController.isLoading.value
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 18.0),
+                ? const Padding(
+                    padding: EdgeInsets.only(right: 18.0),
                     child: SizedBox(
                       height: 20,
                       width: 20,
@@ -218,7 +218,7 @@ class _AddEditPageState extends State<AddEditPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],
