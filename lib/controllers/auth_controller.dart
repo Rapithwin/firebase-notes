@@ -38,6 +38,13 @@ class AuthController extends GetxController {
     }
   }
 
+  bool get isPasswordProvider {
+    if (auth.currentUser == null) return false;
+    return auth.currentUser!.providerData.any(
+      (userInfo) => userInfo.providerId == 'password',
+    );
+  }
+
   // Reload the current user to force a server check. If the user was removed
   // remotely (for example in the emulator), reload may fail or auth.currentUser
   // can become null — in that case sign out locally and navigate to login.
@@ -121,17 +128,28 @@ class AuthController extends GetxController {
     String oldPassword,
     String newPassowrd,
   ) async {
+    if (!isPasswordProvider || auth.currentUser == null) {
+      return (
+        false,
+        FirebaseAuthException(
+          code: 'wrong-provider',
+          message: 'This function is not available for this sign-in method.',
+        ),
+      );
+    }
     try {
+      final email = firebaseUser.value?.email;
+
       isLoading.value = true;
-      final credential = await auth.signInWithEmailAndPassword(
-        email: firebaseUser.value!.email!,
+      final credential = EmailAuthProvider.credential(
+        email: email!,
         password: oldPassword,
       );
 
-      firebaseUser.value?.reauthenticateWithCredential(
-        credential.credential!,
+      await firebaseUser.value?.reauthenticateWithCredential(
+        credential,
       );
-      firebaseUser.value?.updatePassword(newPassowrd);
+      await firebaseUser.value?.updatePassword(newPassowrd);
       return (true, null);
     } on FirebaseAuthException catch (e) {
       log(e.toString());
