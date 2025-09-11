@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_notes/controllers/auth_controller.dart';
-import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:firebase_notes/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,6 +55,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   inputAction: TextInputAction.next,
                   controller: _oldPasswordController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "New password",
@@ -63,6 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   inputAction: TextInputAction.next,
                   controller: _newPasswordController,
                   theme: theme,
+                  validator: emptyValidator,
                 ),
                 CustomFormField(
                   labelName: "Confirm new password",
@@ -70,6 +71,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                   inputAction: TextInputAction.next,
                   controller: _confirmPasswordController,
                   theme: theme,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return emptyValidator(value);
+                    } else if (value != _newPasswordController.text) {
+                      return "Passwords do not match.";
+                    }
+                    return null;
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -136,5 +145,12 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
       ),
     );
+  }
+
+  String? emptyValidator(String? value) {
+    if (value!.isEmpty) {
+      return "This field cannot be empty.";
+    }
+    return null;
   }
 }
