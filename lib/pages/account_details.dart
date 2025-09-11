@@ -1,6 +1,5 @@
 import 'package:firebase_notes/controllers/auth_controller.dart';
 import 'package:firebase_notes/pages/change_password.dart';
-import 'package:firebase_notes/pages/settings_page.dart';
 import 'package:firebase_notes/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,36 +26,38 @@ class AccountDetails extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 26.0),
-              child: SizedBox(
-                height: 65,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  children: <Widget>[
-                    Text(
-                      "Email",
-                      style: theme.textTheme.headlineSmall,
-                    ),
-                    Text(authController.firebaseUser.value!.email!),
-                  ],
-                ),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 26,
+                vertical: 5.0,
               ),
+              title: Text(
+                "Email",
+                style: theme.textTheme.headlineSmall,
+              ),
+              subtitle: Text(authController.firebaseUser.value!.email!),
             ),
-            InkWell(
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 26,
+                vertical: 5.0,
+              ),
               onTap: () {
                 Get.to(
                   () => ChangePassword(),
                   transition: Transition.rightToLeft,
                 );
               },
-              child: SettingsOption(
-                theme: theme,
-                title: "Change password",
-                icon: Icon(Icons.password_outlined),
-                enabled: false,
+
+              enabled: authController.isPasswordProvider,
+              title: Text(
+                "Change Password",
+                style: theme.textTheme.headlineSmall,
               ),
+              subtitle: authController.isPasswordProvider
+                  ? null
+                  : Text("Not available for Google Sign-in"),
+              trailing: Icon(Icons.password_outlined),
             ),
           ],
         ),
