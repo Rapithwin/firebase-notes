@@ -101,64 +101,73 @@ class _AddEditPageState extends State<AddEditPage> {
     final double scale = styleController.scaleFactor;
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        titleSpacing: 0,
-        actionsPadding: const EdgeInsets.only(right: 18.0),
-        leadingWidth: 72,
-        leading: const BackButton(),
-        actions: [
-          if (_showUndoRedo)
-            ValueListenableBuilder(
-              valueListenable: _contentUndoController,
-              builder: (context, value, child) {
-                return Row(
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        _contentUndoController.undo();
-                      },
-                      icon: Icon(
-                        Icons.undo,
-                        color: value.canUndo
-                            ? Get.theme.colorScheme.onSurface
-                            : Get.theme.colorScheme.onSurface.withAlpha(110),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        _contentUndoController.redo();
-                      },
-                      icon: Icon(
-                        Icons.redo,
-                        color: value.canRedo
-                            ? Get.theme.colorScheme.onSurface
-                            : Get.theme.colorScheme.onSurface.withAlpha(110),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: SafeArea(
+          child: AppBar(
+            title: const Text(""),
+            titleSpacing: 0,
+            actionsPadding: const EdgeInsets.only(right: 18.0),
+            leadingWidth: 72,
+            leading: const BackButton(),
+            actions: [
+              if (_showUndoRedo)
+                ValueListenableBuilder(
+                  valueListenable: _contentUndoController,
+                  builder: (context, value, child) {
+                    return Row(
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {
+                            _contentUndoController.undo();
+                          },
+                          icon: Icon(
+                            Icons.undo,
+                            color: value.canUndo
+                                ? Get.theme.colorScheme.onSurface
+                                : Get.theme.colorScheme.onSurface.withAlpha(
+                                    110,
+                                  ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _contentUndoController.redo();
+                          },
+                          icon: Icon(
+                            Icons.redo,
+                            color: value.canRedo
+                                ? Get.theme.colorScheme.onSurface
+                                : Get.theme.colorScheme.onSurface.withAlpha(
+                                    110,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
 
-          Obx(
-            () => storeController.isLoading.value
-                ? const Padding(
-                    padding: EdgeInsets.only(right: 18.0),
-                    child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
+              Obx(
+                () => storeController.isLoading.value
+                    ? const Padding(
+                        padding: EdgeInsets.only(right: 18.0),
+                        child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.5,
+                          ),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: _onSave,
+                        icon: const Icon(Icons.check),
                       ),
-                    ),
-                  )
-                : IconButton(
-                    onPressed: _onSave,
-                    icon: const Icon(Icons.check),
-                  ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 26.0, right: 26.0),

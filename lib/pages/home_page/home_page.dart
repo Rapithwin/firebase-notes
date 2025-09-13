@@ -42,44 +42,45 @@ class _HomePageState extends State<HomePage> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Obx(
           () => !storeController.anyNotesSelected()
-              ? AppBar(
-                  titleSpacing: 25,
-                  // themeController: themeController,
-                  actionsPadding: const EdgeInsets.only(right: 25),
-                  title: const Text("NOTES"),
-                  actions: [
-                    GestureDetector(
-                      onTap: () {
-                        themeController.toggleTheme();
-                      },
-                      child: Get.isDarkMode
-                          ? Image.asset(
-                              "assets/images/solar_sun-bold.png",
-                              height: 30,
-                              width: 30,
-                            )
-                          : Image.asset(
-                              "assets/images/line-md_moon-filled.png",
-                              height: 30,
-                              width: 30,
-                            ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(
-                          () => const SettingsPage(),
-                          transition: Transition.rightToLeft,
-                        );
-                      },
-                      child: const Icon(
-                        Icons.settings_outlined,
-                        size: 33,
+              ? SafeArea(
+                  child: AppBar(
+                    titleSpacing: 25,
+                    actionsPadding: const EdgeInsets.only(right: 25),
+                    title: const Text("NOTES"),
+                    actions: [
+                      GestureDetector(
+                        onTap: () {
+                          themeController.toggleTheme();
+                        },
+                        child: Get.isDarkMode
+                            ? Image.asset(
+                                "assets/images/solar_sun-bold.png",
+                                height: 30,
+                                width: 30,
+                              )
+                            : Image.asset(
+                                "assets/images/line-md_moon-filled.png",
+                                height: 30,
+                                width: 30,
+                              ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => const SettingsPage(),
+                            transition: Transition.rightToLeft,
+                          );
+                        },
+                        child: const Icon(
+                          Icons.settings_outlined,
+                          size: 33,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : AppBar(
                   actionsPadding: const EdgeInsets.only(right: 15),

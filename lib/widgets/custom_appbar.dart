@@ -14,12 +14,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      titleSpacing: titleSpacing,
-      title: title,
-      toolbarHeight: 45,
-      actionsPadding: const EdgeInsets.only(right: 30),
-      actions: actions,
+    return SafeArea(
+      child: AppBar(
+        titleSpacing: titleSpacing,
+        title: title,
+        toolbarHeight: 45,
+        actionsPadding: const EdgeInsets.only(right: 30),
+        actions: actions,
+      ),
     );
   }
 
