@@ -10,11 +10,14 @@ import 'package:firebase_notes/controllers/store_controller.dart';
 import 'package:firebase_notes/controllers/theme_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await firebaseInitialization;
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   Get.put(
     AuthController(
       auth: auth,

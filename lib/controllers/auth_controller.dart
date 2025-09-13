@@ -5,6 +5,7 @@ import 'package:firebase_notes/constants/exceptions.dart';
 import 'package:firebase_notes/pages/home_page/home_page.dart';
 import 'package:firebase_notes/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -36,6 +37,7 @@ class AuthController extends GetxController {
     } else {
       navigate(const LoginPage());
     }
+    FlutterNativeSplash.remove();
   }
 
   bool get isPasswordProvider {
