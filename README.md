@@ -13,3 +13,34 @@ This is a notes app with a modern and smiple Material-based UI. The application 
 - Gird view and list view for showing the notes
 - Offline caching using Firestore
   
+## Screenshots
+<img src="https://github.com/Rapithwin/firebase-notes/blob/main/Screenshots/Screenshot_1757780322.png" height=350px> <img src="https://github.com/Rapithwin/firebase-notes/blob/main/Screenshots/Screenshot_1757780331.png" height=350px>
+<img src="https://github.com/Rapithwin/firebase-notes/blob/main/Screenshots/Screenshot_1757780337.png" height=350px>
+<img src="https://github.com/Rapithwin/firebase-notes/blob/main/Screenshots/Screenshot_1757780340.png" height=350px>
+
+## Getting Started (Android)
+
+### Prerequisites
+
+- [Flutter](https://flutter.dev/docs/get-started/install) (3.x recommended)
+- Android Studio or VS Code
+- An Android device or emulator
+
+### Setup
+
+1. **Clone the repository:**
+   ```powershell
+   git clone https://github.com/Rapithwin/firebase-notes.git
+   cd firebase-notes
+   ```
+2. **Install dependencies:**
+   ```powershell
+   flutter pub get
+   ```
+3. **Run the app:**
+   ```powershell
+   flutter run
+   ```
+
+## Download APK
+[Download](https://github.com/Rapithwin/firebase-notes/releases)
