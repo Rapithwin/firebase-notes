@@ -35,10 +35,12 @@ class _GridNotesState extends State<GridNotes> {
       itemBuilder: (context, index) {
         return Obx(
           () => Card(
+            clipBehavior: Clip.antiAlias,
             color: widget.controller.isSelectedById(notes[index].id)
                 ? colorScheme.secondaryContainer
                 : colorScheme.surfaceContainerHighest,
             child: InkWell(
+              borderRadius: BorderRadius.circular(12.0),
               splashFactory: InkSparkle.splashFactory,
               onTap: () {
                 widget.controller.anyNotesSelected()

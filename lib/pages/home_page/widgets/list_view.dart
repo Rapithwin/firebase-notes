@@ -32,11 +32,13 @@ class _ListNotesState extends State<ListNotes> {
       itemBuilder: (context, index) {
         return Obx(
           () => Card(
+            clipBehavior: Clip.antiAlias,
             color: widget.controller.isSelectedById(notes[index].id)
                 ? colorScheme.secondaryContainer
                 : colorScheme.surfaceContainerHighest,
             child: InkWell(
               splashFactory: InkSparkle.splashFactory,
+
               onTap: () {
                 widget.controller.anyNotesSelected()
                     ? widget.controller.toggleSelected(index)
@@ -52,7 +54,7 @@ class _ListNotesState extends State<ListNotes> {
                 widget.controller.toggleSelected(index);
               },
 
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 padding: const EdgeInsets.only(
                   left: 15,
